@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports System.Drawing
 
 Public Class _Convert
 

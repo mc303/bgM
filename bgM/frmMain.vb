@@ -69,7 +69,7 @@ Public Class frmMain
 
         Me.KeyPreview = True
 
-        If _reg.getRegWallpaper = "" Then
+        If _reg.getRegSourceWallpaper = "" Then
             Dim _regKey As RegistryKey
             _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             If _regKey.GetValue("Wallpaper") = "" Then
@@ -81,7 +81,7 @@ Public Class frmMain
             End If
             _regKey = Nothing
         Else
-            _image = ResizeImage.Image(_reg.getRegWallpaper, New Size(screenWidth, screenHeight), True)
+            _image = ResizeImage.Image(_reg.getRegSourceWallpaper, New Size(screenWidth, screenHeight), True)
         End If
 
         With Me.pbMainBackground
@@ -238,7 +238,7 @@ Public Class frmMain
 
     Private Sub loadItemsFromRegistryAddToForm()
         Dim _inputFields As Integer = _reg.getInputFields()
-        Me.txtOpenBackgroundFileName.Text = _reg.getRegWallpaper()
+        Me.txtOpenBackgroundFileName.Text = _reg.getRegSourceWallpaper()
 
         If Not _inputFields = 0 Then
             For i As Integer = 0 To _inputFields - 1
@@ -283,7 +283,7 @@ Public Class frmMain
         'txtBox3.Text = ScreenPos.ToString
         lblScreenPos.Text = _screenPos.ToString
         _reg.setInputFields(Me.Controls.OfType(Of TextBox).Count)
-        _reg.setRegWallpaper(Me.txtOpenBackgroundFileName.Text)
+        _reg.setRegSourceWallpaper(Me.txtOpenBackgroundFileName.Text)
         '_reg.setFont(FontDialog1.Font.ToString)
 
         Call _reg.setFontFamily(tscbFontFamilies.Text)
@@ -658,7 +658,7 @@ Public Class frmMain
     Private Sub txtOpenBackgroundFileName_TextChanged(sender As Object, e As EventArgs) Handles txtOpenBackgroundFileName.TextChanged
         Dim _txt As TextBox = DirectCast(sender, TextBox)
 
-        If Not _txt.Text = _reg.getRegWallpaper Then
+        If Not _txt.Text = _reg.getRegSourceWallpaper Then
             _notSaved = True
         End If
     End Sub

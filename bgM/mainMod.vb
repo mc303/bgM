@@ -8,7 +8,7 @@ Module mainMod
 
     Public Sub loadPictureToMsToPicturebox()
         Dim _bgBox As PictureBox = frmMain.pbMainBackground
-        Dim _bg As String = _reg.getRegWallpaper
+        Dim _bg As String = _reg.getRegSourceWallpaper
         Dim _imgToMemoryStream As New MemoryStream()
         Dim _bmImage As Bitmap = New System.Drawing.Bitmap(_bg)
 
@@ -26,15 +26,15 @@ Module mainMod
 
     End Sub
 
-    Public Sub saveLocation(_lbl As Control)
+    'Public Sub saveLocation(_lbl As Control)
 
-        Dim _pX As Integer = _lbl.Left / (screenWidth / 100)
-        Dim _pY As Integer = (_lbl.Top + 25) / (screenHeight / 100)
-        ' frmMain.TextBox3.Text = frmMain.MousePosition.X & ", " & frmMain.MousePosition.Y & " - " & _pX & ", " & _pY
+    '    Dim _pX As Integer = _lbl.Left / (screenWidth / 100)
+    '    Dim _pY As Integer = (_lbl.Top + 25) / (screenHeight / 100)
+    '    ' frmMain.TextBox3.Text = frmMain.MousePosition.X & ", " & frmMain.MousePosition.Y & " - " & _pX & ", " & _pY
 
-        Call _reg.setRegX(_pX)
-        Call _reg.setRegY(_pY)
-    End Sub
+    '    Call _reg.setRegX(_pX)
+    '    Call _reg.setRegY(_pY)
+    'End Sub
 
     
 

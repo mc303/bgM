@@ -21,6 +21,7 @@ Public Class frmPreview
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
         Me.WindowState = FormWindowState.Maximized
 
+
         With Me.pbBackground
             .Visible = True
             .Dock = DockStyle.Fill
@@ -33,38 +34,8 @@ Public Class frmPreview
 
         Call Me.createPreviewFromBackground()
         'Call Me.loadPreviewView()
+       
         _txt = Nothing
-    End Sub
-
-    Private Sub loadPreviewView()
-        Dim _txt As ComboBox
-        Dim i As Integer = 0
-        Dim ScreenPos As Point
-
-        For Each _item As String In frmMain.lbItems.Items
-            lbl = New Label
-
-            _txt = CType(frmMain.Controls(_item), ComboBox)
-            ScreenPos = _txt.PointToScreen(New Point(0, 0))
-            With lbl
-                .Parent = Me.pbBackground
-                .Text = _txt.Text
-                .Font = _txt.Font
-                .ForeColor = _txt.ForeColor
-                .Location = New Point(ScreenPos)
-                .BackColor = Color.Transparent
-                .AutoSize = True
-                .BringToFront()
-
-            End With
-
-            Me.Controls.Add(lbl)
-        Next
-
-        Me.pbBackground.SendToBack()
-        _txt = Nothing
-        ScreenPos = Nothing
-
     End Sub
 
     Sub createPreviewFromBackground()
@@ -91,7 +62,8 @@ Public Class frmPreview
         For Each _item As String In frmMain.lbItems.Items
             _txt = CType(frmMain.Controls(_item), TextBox)
             '_screenPos = _txt.PointToScreen(New Point(-21, -10))
-            _screenPos = _txt.PointToScreen(New Point(-5, 0))
+            ' _screenPos = _txt.PointToScreen(New Point(-5, 0))
+            _screenPos = _txt.PointToScreen(New Point(0, 5))
             'ScreenPos = _txt.Location
             _color = New SolidBrush(_txt.ForeColor)
             'Write your text.

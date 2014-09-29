@@ -6,16 +6,30 @@ Public Class _reg
         _regKey = Registry.CurrentUser.CreateSubKey("Software\bgM", RegistryKeyPermissionCheck.Default)
         _regKey = Nothing
     End Sub
-
    
-    Public Shared Sub setRegWallpaper(_bg As String)
+    Public Shared Sub setRegSourceWallpaper(_bg As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.SetValue("SourceWallpaper", _bg, RegistryValueKind.String)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Function getRegSourceWallpaper() As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("SourceWallpaper", "").ToString
+
+        _regKey = Nothing
+    End Function
+
+    Public Shared Sub setWallpaper(_bg As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         _regKey.SetValue("Wallpaper", _bg, RegistryValueKind.String)
         _regKey = Nothing
     End Sub
 
-    Public Shared Function getRegWallpaper() As String
+    Public Shared Function getWallpaper() As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         Return _regKey.GetValue("Wallpaper", "").ToString
