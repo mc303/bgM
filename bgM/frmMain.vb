@@ -126,6 +126,7 @@ Public Class frmMain
             .Items.Add("%USERNAME%")
             .Items.Add("%USERPROFILE%")
             .Items.Add("%WINDIR%")
+            .Items.Add("#IP#")
         End With
 
         For Each Family As FontFamily In FontFamily.Families
@@ -252,7 +253,7 @@ Public Class frmMain
                     .ContextMenuStrip = cmsItems
                     .ForeColor = ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2")))
                     .Size() = New System.Drawing.Size(_reg.getItemWidth(i.ToString("D2")), 21)
-                    .Font = _Convert.ToFontFromString(_reg.getItemFont(i.ToString("D2")))
+                    .Font = _reg.getItemFont(i.ToString("D2"))
                     .TextAlign = _reg.getItemAlign(i.ToString("D2"))
                     '.Location = Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
                     .Location = PointToClient(_Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2"))))
@@ -289,7 +290,7 @@ Public Class frmMain
             _txt = CType(Me.Controls(_item), TextBox)
             _screenPos = _txt.PointToScreen(New Point(0, 0))
             _reg.setItemText(i.ToString("D2"), _txt.Text)
-            _reg.setItemFont(i.ToString("D2"), _txt.Font.ToString)
+            _reg.setItemFont(i.ToString("D2"), _txt.Font)
             _reg.setItemColor(i.ToString("D2"), ColorTranslator.ToWin32(_txt.ForeColor))
             _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
             _reg.setItemWidth(i.ToString("D2"), _txt.Width)

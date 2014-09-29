@@ -110,25 +110,32 @@ Public Class _reg
         _regKey = Nothing
     End Sub
 
-    Public Shared Function getItemFont(_n As String)
+    Public Shared Function getItemFont(_n As String) As Font
+        Dim _font As Font
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        Return _regKey.GetValue("text" & _n & "Font")
+        Dim _fontstyle As FontStyle = _regKey.GetValue("text" & _n & "FontStyle", 0)
+        _font = New Font(_regKey.GetValue("text" & _n & "FontFamily", "Arial").ToString, Convert.ToSingle(_regKey.GetValue("text" & _n & "FontSize", "16")), _fontstyle)
+        Return _font
 
         _regKey = Nothing
     End Function
 
-    Public Shared Sub setItemFont(_n As String, _txtFont As String)
+    Public Shared Sub setItemFont(_n As String, _font As Font)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        _regKey.SetValue("text" & _n & "Font", _txtFont, RegistryValueKind.String)
+        _regKey.SetValue("text" & _n & "FontStyle", _font.Style, RegistryValueKind.DWord)
+        _regKey.SetValue("text" & _n & "FontFamily", _font.FontFamily.Name, RegistryValueKind.String)
+        _regKey.SetValue("text" & _n & "FontSize", _font.Size, RegistryValueKind.DWord)
         _regKey = Nothing
     End Sub
 
     Public Shared Sub delItemFont(_n As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        _regKey.DeleteValue("text" & _n & "Font", False)
+        _regKey.DeleteValue("text" & _n & "FontStyle", False)
+        _regKey.DeleteValue("text" & _n & "FontFamily", False)
+        _regKey.DeleteValue("text" & _n & "FontSize", False)
         _regKey = Nothing
     End Sub
 
