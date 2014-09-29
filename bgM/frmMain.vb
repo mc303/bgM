@@ -7,6 +7,7 @@ Public Class frmMain
     Dim _i As Integer = 0
     Dim _l As Integer = 0
     Dim _nameN As Integer = 0
+    Public _keyValue As Keys
     ' Dim cmb As New ComboBox()
     Dim txt As New TextBox()
 
@@ -49,7 +50,7 @@ Public Class frmMain
        
 
         With Me.Panel1
-            .Visible = False
+            .Visible = True
         End With
 
         With Me.tsMain
@@ -210,6 +211,7 @@ Public Class frmMain
         AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
         AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
         AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
+        AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
         AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
 
         _font = New Font(tscbFontFamilies.Text, Convert.ToSingle(tscbFontSize.Text), getFontStyle)
@@ -245,6 +247,7 @@ Public Class frmMain
                 AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
                 AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
                 AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
+                AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
                 AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
 
                 With txt
@@ -418,7 +421,7 @@ Public Class frmMain
     Private Sub txt_MouseMove(sender As Object, e As MouseEventArgs)
         Dim _controlMove As TextBox = DirectCast(sender, TextBox)
 
-        If _controlMove.Tag IsNot Nothing Then
+        If _controlMove.Tag IsNot Nothing AndAlso e.Button = Windows.Forms.MouseButtons.Left AndAlso _keyValue = Keys.ControlKey Then
             Dim info As DragInfo = CType(_controlMove.Tag, DragInfo)
             Dim newLoc As Point = info.NewLocation(Form.MousePosition)
 
@@ -445,7 +448,8 @@ Public Class frmMain
 
     Private Sub txt_KeyDown(sender As Object, e As KeyEventArgs)
         Dim _controlMove As TextBox = DirectCast(sender, TextBox)
-        'txtBox2.Text = e.KeyData
+        _keyValue = e.KeyCode
+        txtBox3.Text = e.KeyCode
         Select Case e.KeyData
             Case (Keys.Control + Keys.Left)
                 _controlMove.Location = New Point(_controlMove.Left - 1, _controlMove.Top)
@@ -470,6 +474,11 @@ Public Class frmMain
 
         _controlMove = Nothing
         _screenPos = Nothing
+    End Sub
+
+
+    Private Sub txt_KeyUp(sender As Object, e As KeyEventArgs)
+        _keyValue = Nothing
     End Sub
 
     Private Sub txt_GotFocus(sender As Object, e As EventArgs)
@@ -643,14 +652,6 @@ Public Class frmMain
 
     Private Sub tscmdClose_Click(sender As Object, e As EventArgs) Handles tscmdClose.Click
         Call Me.saveMessageBeforeExit()
-    End Sub
-
-    Private Sub tscmdCreateBackground_Click(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub tscmdSaveBackground_Click(sender As Object, e As EventArgs)
-
     End Sub
 
     Private Sub txtOpenBackgroundFileName_TextChanged(sender As Object, e As EventArgs) Handles txtOpenBackgroundFileName.TextChanged

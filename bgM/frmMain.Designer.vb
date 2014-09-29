@@ -46,6 +46,13 @@ Partial Class frmMain
         Me.cmdResize = New System.Windows.Forms.Button()
         Me.tsMain = New System.Windows.Forms.ToolStrip()
         Me.tscmdShow = New System.Windows.Forms.ToolStripButton()
+        Me.tslblBackground = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.CreateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ApplyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tscmdOpenBG = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsMenu = New System.Windows.Forms.ToolStripDropDownButton()
@@ -72,13 +79,6 @@ Partial Class frmMain
         Me.ofdOpenBackground = New System.Windows.Forms.OpenFileDialog()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.sfdSaveColorBackground = New System.Windows.Forms.SaveFileDialog()
-        Me.tslblBackground = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.CreateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ApplyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -241,6 +241,50 @@ Partial Class frmMain
         Me.tscmdShow.Name = "tscmdShow"
         Me.tscmdShow.Size = New System.Drawing.Size(23, 22)
         Me.tscmdShow.Text = ">"
+        '
+        'tslblBackground
+        '
+        Me.tslblBackground.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tslblBackground.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CreateToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ToolStripSeparator5, Me.ApplyToolStripMenuItem, Me.ToolStripSeparator6, Me.ExitToolStripMenuItem})
+        Me.tslblBackground.Image = CType(resources.GetObject("tslblBackground.Image"), System.Drawing.Image)
+        Me.tslblBackground.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tslblBackground.Name = "tslblBackground"
+        Me.tslblBackground.Size = New System.Drawing.Size(87, 22)
+        Me.tslblBackground.Text = "Background:"
+        '
+        'CreateToolStripMenuItem
+        '
+        Me.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem"
+        Me.CreateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.CreateToolStripMenuItem.Text = "Create Background"
+        '
+        'SaveToolStripMenuItem
+        '
+        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.SaveToolStripMenuItem.Text = "Save Background"
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(172, 6)
+        '
+        'ApplyToolStripMenuItem
+        '
+        Me.ApplyToolStripMenuItem.Name = "ApplyToolStripMenuItem"
+        Me.ApplyToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.ApplyToolStripMenuItem.Text = "Apply Background"
+        '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(172, 6)
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'tscmdOpenBG
         '
@@ -468,50 +512,6 @@ Partial Class frmMain
         '
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(13, 22)
-        '
-        'tslblBackground
-        '
-        Me.tslblBackground.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.tslblBackground.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CreateToolStripMenuItem, Me.SaveToolStripMenuItem, Me.ToolStripSeparator5, Me.ApplyToolStripMenuItem, Me.ToolStripSeparator6, Me.ExitToolStripMenuItem})
-        Me.tslblBackground.Image = CType(resources.GetObject("tslblBackground.Image"), System.Drawing.Image)
-        Me.tslblBackground.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tslblBackground.Name = "tslblBackground"
-        Me.tslblBackground.Size = New System.Drawing.Size(87, 22)
-        Me.tslblBackground.Text = "Background:"
-        '
-        'CreateToolStripMenuItem
-        '
-        Me.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem"
-        Me.CreateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.CreateToolStripMenuItem.Text = "Create Background"
-        '
-        'SaveToolStripMenuItem
-        '
-        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.SaveToolStripMenuItem.Text = "Save Background"
-        '
-        'ApplyToolStripMenuItem
-        '
-        Me.ApplyToolStripMenuItem.Name = "ApplyToolStripMenuItem"
-        Me.ApplyToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.ApplyToolStripMenuItem.Text = "Apply Background"
-        '
-        'ToolStripSeparator5
-        '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(149, 6)
-        '
-        'ToolStripSeparator6
-        '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(149, 6)
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'frmMain
         '
