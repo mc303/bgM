@@ -1,0 +1,146 @@
+﻿Private Sub cbTextInput_MouseDown(sender As Object, e As MouseEventArgs)
+        Dim _controlMove As ComboBox = cbTextInput
+        _controlMove.Tag = New DragInfo(Form.MousePosition, _controlMove.Location)
+    End Sub
+
+    Private Sub cbTextInput_MouseMove(sender As Object, e As MouseEventArgs)
+        Dim _controlMove As ComboBox = cbTextInput
+        If _controlMove.Tag IsNot Nothing Then
+            Dim info As DragInfo = CType(_controlMove.Tag, DragInfo)
+            Dim newLoc As Point = info.NewLocation(Form.MousePosition)
+            If Me.ClientRectangle.Contains(New Rectangle(newLoc, _controlMove.Size)) Then
+                _controlMove.Location = newLoc
+            End If
+        End If
+    End Sub
+
+    Private Sub cbTextInput_MouseUp(sender As Object, e As MouseEventArgs)
+        Dim _controlMove As ComboBox = cbTextInput
+        _controlMove.Tag = Nothing
+        saveLocation(_controlMove)
+    End Sub
+
+	 With Me.cbNewInput
+            .Text = "Text starts from here"
+            .Font = FontConverter.FromBase64String(_reg.getRegFont)
+            .Location = New System.Drawing.Point(screenWidth / 2, screenHeight / 2)
+            .Size() = New System.Drawing.Size(280, 21)
+        End With
+
+
+		If (e.KeyCode = Keys.Left AndAlso e.Modifiers = Keys.Control) Then
+            _controlMove.Location = New Point(_controlMove.Left - 1, _controlMove.Top)
+            TextBox1.Text = _controlMove.Location.ToString
+        ElseIf (e.KeyCode = Keys.Right AndAlso e.Modifiers = Keys.Control) Then
+            _controlMove.Location = New Point(_controlMove.Left + 1, _controlMove.Top)
+            TextBox1.Text = _controlMove.Location.ToString
+        ElseIf (e.KeyCode = Keys.Up AndAlso e.Modifiers = Keys.Control) Then
+            _controlMove.Location = New Point(_controlMove.Left, _controlMove.Top - 1)
+            TextBox1.Text = _controlMove.Location.ToString
+        ElseIf (e.KeyCode = Keys.Down AndAlso e.Modifiers = Keys.Control) Then
+            _controlMove.Location = New Point(_controlMove.Left, _controlMove.Top + 1)
+            TextBox1.Text = _controlMove.Location.ToString
+        End If
+
+
+
+		######################## maken van vierkant teken ###################################
+		 Private Sub Form1_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+        '-- 1.0  Flip the state.
+        Me._bRubberBandingOn = Not _bRubberBandingOn
+
+        '-- 2.0 if the state is on
+        If Me._bRubberBandingOn Then
+            '-- 2.1 make sure the object exists (create if not)
+            If _pClickStart = Nothing Then _pClickStart = New Point
+
+            '-- 2.2 Save the mouse's start postition
+            _pClickStart.X = e.X
+            _pClickStart.Y = e.Y
+            '-- 2.3 Save the current location for the immediate drawing
+            _pNow.X = e.X
+            _pNow.Y = e.Y
+        End If
+        '-- 3.0 Invalidate and for the paint method to be called.
+        Me.Invalidate()
+    End Sub
+
+    Private Sub Form1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseMove
+        '-- 1.0 If the rubber banding is on, set the current location, and force the redraw.
+        If Me._bRubberBandingOn Then
+            '-- 1.1 make sure the object exists (create if not)
+            If _pNow = Nothing Then _pNow = New Point
+            '-- 1.2 Save the current location for the immediate drawing
+            Me._pNow.X = e.X
+            Me._pNow.Y = e.Y
+            '-- 1.3 Invalidate and for the paint method to be called.
+            Me.Invalidate()
+        End If
+    End Sub
+
+    Private Sub Form1_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
+        '-- 1.0  Flip the state.
+        Me._bRubberBandingOn = Not Me._bRubberBandingOn
+        '-- 2.0 if the state is off
+        If Not Me._bRubberBandingOn Then
+            '-- 2.1 make sure the object exists (create if not)
+            If _pClickStop = Nothing Then _pClickStop = New Point
+            '-- 2.2 Save the mouse's stop postition
+            _pClickStop.X = e.X
+            _pClickStop.Y = e.Y
+            '-- 2.3 Invalidate and for the paint method to be called.
+            Me.Invalidate()
+        End If
+    End Sub
+
+    Private Sub Form1_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
+        '-- 1.0 The rectangle used by .NET to get the draw area
+        Dim _rRectangle As New Rectangle
+        '-- 2.0 The pen.  You can change the color or pixel width to your heart's content
+        Dim _penNew As New Pen(Color.Black, 3)
+        '-- 3.0 Set the rectangle's top left x/y to the click location.
+        _rRectangle.X = _pClickStart.X
+        _rRectangle.Y = _pClickStart.Y
+        '-- 4.0  If the state is on...
+        If Me._bRubberBandingOn Then
+            '-- 4.1 Set the rectangle's  width using the 'now' mouse location just set in the 'Form1_MouseMove' event
+            _rRectangle.Width = Me._pNow.X - _pClickStart.X
+            _rRectangle.Height = Me._pNow.Y - _pClickStart.Y
+        Else '-- else if we are done having the shape follow the mouse
+            '-- 4.2 Set the rectangle's  width using the 'stop' mouse location just set in the 'Form1_MouseUp' event
+            _rRectangle.Width = Me._pClickStop.X - _pClickStart.X
+            _rRectangle.Height = Me._pClickStop.Y - _pClickStart.Y
+
+        End If
+        '-- 5.0  Let's be cheeky and make it a dashed style
+        '_penNew.
+        '-- 6.0 Draw the elipse
+        'e.Graphics.DrawEllipse(_penNew, _rRectangle)
+        '-- 7.0 Notice the rectangle is the same thing!
+        e.Graphics.DrawRectangle(_penNew, _rRectangle)
+    End Sub
+
+Public Class ConvertItems
+
+    '  ^\%.*\%$
+    Public Shared Function itemToEnviromentVar(ByVal _env As String) As String
+        Dim expression As Regex
+        expression = New Regex("^\%.*\%$")
+        If expression.Match(_env).Success Then
+            Return Environment.GetEnvironmentVariable(_env.Replace("%", ""))
+        Else
+            Return _env
+        End If
+    End Function
+
+    Private Shared Function regexReplace(ByVal sInput As String, ByVal sFind As String, ByVal sReplace As String)
+        Try
+            ' nul input allowed
+            Dim expression As Regex
+            expression = New Regex(sFind)
+            Return expression.Replace(sInput, sReplace)
+        Catch ex As Exception
+            Return sInput
+        End Try
+    End Function
+End Class

@@ -1,0 +1,8 @@
+﻿// Todo list for new options
+
+1. Read picture size and use picture size to place Text field. Ore save textfile as your screen and place image.
+2. Timer: waait XX seconds to change the wallpaper
+3. For every textbox a diferent Font
+4. Add drawing options. Add a line and Box
+5. Add save button voor all fields.
+6. Combobox.items.add Via XML add enviroment variablen
