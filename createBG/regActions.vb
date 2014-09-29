@@ -301,4 +301,18 @@ Public Class _reg
         _regKey.SetValue("FontColor", _color, RegistryValueKind.DWord)
         _regKey = Nothing
     End Sub
+
+    Public Shared Function getWait() As Integer
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("Wait", 0)
+        _regKey = Nothing
+    End Function
+
+    Public Shared Sub setWait(ByVal _wait As Integer)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.SetValue("Wait", _wait, RegistryValueKind.DWord)
+        _regKey = Nothing
+    End Sub
 End Class

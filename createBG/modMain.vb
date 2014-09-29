@@ -2,19 +2,38 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
+Imports System.Timers
 
 Module modMain
     Const _locCorrect = 23
-
+    Private _timer As System.Timers.Timer
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
 
-
     Sub Main()
-    
+        If _reg.getWait = 0 Then
+            Call tick()
+        Else
+            _timer = New System.Timers.Timer
+            _timer.Interval = _reg.getWait * 1000
+            '  _timer.Enabled = True
+            _timer.AutoReset = False
+            ' _timer.Stop()
+            _timer.Start()
+            AddHandler _timer.Elapsed, AddressOf tick
+
+            While _timer.Enabled = True
+
+            End While
+        End If
+    End Sub
+
+    Private Sub tick()
         Call createPreviewFromBackground()
         Call Wallpaper.Apply(_reg.getWallpaper)
-
+        If Not _reg.getWait = 0 Then
+            _timer.Stop()
+        End If
         Application.Exit()
     End Sub
 
