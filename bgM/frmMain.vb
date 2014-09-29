@@ -54,6 +54,12 @@ Public Class frmMain
             .Visible = False
         End With
 
+        With Me.lblScreenPos
+            .Top = screenHeight - 38
+            .Left = screenWidth - 140
+            .Visible = True
+        End With
+
         With Me.tsMain
             .Top = 25
             .Left = 8
@@ -776,5 +782,20 @@ Public Class frmMain
             '_bg = sfdSaveColorBackground.FileName
             Call Me.saveItemsToBackground(sfdSaveColorBackground.FileName)
         End If
+    End Sub
+
+    Private Sub tscmdSettings_Click(sender As Object, e As EventArgs) Handles tscmdSettings.Click
+        If Me.plSettings.Visible Then
+            With Me.plSettings
+
+                .Visible = False
+            End With
+        Else
+            With Me.plSettings
+                .Top = tsMain.Top + tscmdSettings.Height + 5
+                .Visible = True
+            End With
+        End If
+        
     End Sub
 End Class

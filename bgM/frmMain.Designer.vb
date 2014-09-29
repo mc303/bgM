@@ -72,19 +72,25 @@ Partial Class frmMain
         Me.tscmdPreviewBG = New System.Windows.Forms.ToolStripButton()
         Me.tscmdSaveItems = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.lblScreenPos = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripSeparator()
         Me.pbMainBackground = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.ofdOpenBackground = New System.Windows.Forms.OpenFileDialog()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.sfdSaveColorBackground = New System.Windows.Forms.SaveFileDialog()
+        Me.tscmdSettings = New System.Windows.Forms.ToolStripButton()
+        Me.plSettings = New System.Windows.Forms.Panel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.lblScreenPos = New System.Windows.Forms.Label()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tsMain.SuspendLayout()
         CType(Me.pbMainBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
+        Me.plSettings.SuspendLayout()
         Me.SuspendLayout()
         '
         'lbItems
@@ -224,7 +230,7 @@ Partial Class frmMain
         Me.tsMain.Dock = System.Windows.Forms.DockStyle.None
         Me.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.tsMain.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.tsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscmdShow, Me.tslblBackground, Me.tscmdOpenBG, Me.ToolStripSeparator4, Me.tsMenu, Me.tscbFontFamilies, Me.tscbFontSize, Me.tscmdFontBold, Me.tscmdFontItalic, Me.tscmdFontUnderline, Me.tscmdFontColor, Me.ToolStripSeparator3, Me.tscmdAddItem, Me.tscbListItems, Me.tscmdHide, Me.tscmdClose, Me.tscmdPreviewBG, Me.tscmdSaveItems, Me.ToolStripSeparator2, Me.lblScreenPos, Me.ToolStripButton1})
+        Me.tsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscmdShow, Me.tslblBackground, Me.tscmdOpenBG, Me.ToolStripSeparator4, Me.tsMenu, Me.tscbFontFamilies, Me.tscbFontSize, Me.tscmdFontBold, Me.tscmdFontItalic, Me.tscmdFontUnderline, Me.tscmdFontColor, Me.ToolStripSeparator3, Me.tscmdAddItem, Me.tscbListItems, Me.tscmdHide, Me.tscmdClose, Me.tscmdPreviewBG, Me.tscmdSaveItems, Me.ToolStripSeparator2, Me.ToolStripButton1, Me.tscmdSettings})
         Me.tsMain.Location = New System.Drawing.Point(0, 0)
         Me.tsMain.Name = "tsMain"
         Me.tsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -469,16 +475,6 @@ Partial Class frmMain
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
-        'lblScreenPos
-        '
-        Me.lblScreenPos.AutoSize = False
-        Me.lblScreenPos.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.lblScreenPos.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.lblScreenPos.Name = "lblScreenPos"
-        Me.lblScreenPos.Size = New System.Drawing.Size(120, 22)
-        Me.lblScreenPos.Text = "X=0, Y=0"
-        Me.lblScreenPos.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay
-        '
         'ToolStripButton1
         '
         Me.ToolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
@@ -487,7 +483,7 @@ Partial Class frmMain
         '
         'pbMainBackground
         '
-        Me.pbMainBackground.Location = New System.Drawing.Point(489, 51)
+        Me.pbMainBackground.Location = New System.Drawing.Point(432, 258)
         Me.pbMainBackground.Name = "pbMainBackground"
         Me.pbMainBackground.Size = New System.Drawing.Size(100, 50)
         Me.pbMainBackground.TabIndex = 15
@@ -499,7 +495,7 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.txtBox1)
         Me.Panel1.Controls.Add(Me.txtOpenBackgroundFileName)
         Me.Panel1.Controls.Add(Me.txtBox3)
-        Me.Panel1.Location = New System.Drawing.Point(6, 32)
+        Me.Panel1.Location = New System.Drawing.Point(48, 172)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(249, 310)
         Me.Panel1.TabIndex = 16
@@ -514,12 +510,73 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(13, 22)
         '
+        'tscmdSettings
+        '
+        Me.tscmdSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tscmdSettings.AutoToolTip = False
+        Me.tscmdSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tscmdSettings.Image = CType(resources.GetObject("tscmdSettings.Image"), System.Drawing.Image)
+        Me.tscmdSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tscmdSettings.Name = "tscmdSettings"
+        Me.tscmdSettings.Size = New System.Drawing.Size(53, 22)
+        Me.tscmdSettings.Text = "Settings"
+        '
+        'plSettings
+        '
+        Me.plSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.plSettings.Controls.Add(Me.Button1)
+        Me.plSettings.Controls.Add(Me.Label1)
+        Me.plSettings.Controls.Add(Me.TextBox1)
+        Me.plSettings.Location = New System.Drawing.Point(458, 48)
+        Me.plSettings.Name = "plSettings"
+        Me.plSettings.Size = New System.Drawing.Size(544, 103)
+        Me.plSettings.TabIndex = 17
+        Me.plSettings.Visible = False
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(12, 20)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(466, 20)
+        Me.TextBox1.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(9, 4)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(145, 13)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Save Wallpaper as filename: "
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(484, 20)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(55, 20)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Save"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'lblScreenPos
+        '
+        Me.lblScreenPos.AutoSize = True
+        Me.lblScreenPos.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblScreenPos.Location = New System.Drawing.Point(455, 207)
+        Me.lblScreenPos.Name = "lblScreenPos"
+        Me.lblScreenPos.Size = New System.Drawing.Size(144, 18)
+        Me.lblScreenPos.TabIndex = 18
+        Me.lblScreenPos.Text = "{ X=9999, Y=9999 }"
+        Me.lblScreenPos.Visible = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1094, 373)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblScreenPos)
+        Me.Controls.Add(Me.plSettings)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.pbMainBackground)
         Me.Controls.Add(Me.tsMain)
@@ -541,7 +598,10 @@ Partial Class frmMain
         CType(Me.pbMainBackground, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.plSettings.ResumeLayout(False)
+        Me.plSettings.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents lbItems As System.Windows.Forms.ListBox
@@ -563,7 +623,6 @@ Partial Class frmMain
     Friend WithEvents nudResize As System.Windows.Forms.NumericUpDown
     Friend WithEvents AlignRightToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AlignLeftToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents lblScreenPos As System.Windows.Forms.ToolStripLabel
     Friend WithEvents pbMainBackground As System.Windows.Forms.PictureBox
     Friend WithEvents tscbListItems As System.Windows.Forms.ToolStripComboBox
     Friend WithEvents tscmdAddItem As System.Windows.Forms.ToolStripButton
@@ -599,5 +658,11 @@ Partial Class frmMain
     Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tscmdSettings As System.Windows.Forms.ToolStripButton
+    Friend WithEvents plSettings As System.Windows.Forms.Panel
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents lblScreenPos As System.Windows.Forms.Label
 
 End Class

@@ -2,38 +2,20 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Windows.Forms
-Imports System.Timers
+Imports System.Threading
 
 Module modMain
-    Const _locCorrect = 23
-    Private _timer As System.Timers.Timer
+    Const _offsetX = 8
+    Const _offsetY = 13
+
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
 
     Sub Main()
-        If _reg.getWait = 0 Then
-            Call tick()
-        Else
-            _timer = New System.Timers.Timer
-            _timer.Interval = _reg.getWait * 1000
-            '  _timer.Enabled = True
-            _timer.AutoReset = False
-            ' _timer.Stop()
-            _timer.Start()
-            AddHandler _timer.Elapsed, AddressOf tick
-
-            While _timer.Enabled = True
-
-            End While
-        End If
-    End Sub
-
-    Private Sub tick()
+        Dim _sleep As Integer = _reg.getWait * 1000
+        Thread.Sleep(_sleep)
         Call createPreviewFromBackground()
         Call Wallpaper.Apply(_reg.getWallpaper)
-        If Not _reg.getWait = 0 Then
-            _timer.Stop()
-        End If
         Application.Exit()
     End Sub
 
@@ -63,6 +45,7 @@ Module modMain
                 _txt = _reg.getItemText(i.ToString("D2"))
                 '_screenPos = _txt.PointToScreen(New Point(-21, -10))
                 _screenPos = _Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
+                _screenPos = New Point((_screenPos.X + _offsetX), (_screenPos.Y + _offsetY))
                 'ScreenPos = _txt.Location
                 _color = New SolidBrush(ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2"))))
                 'Write your text.
@@ -88,6 +71,7 @@ Module modMain
 
             'Save the new image to the response output stream.
             bitMapImage.Save(_reg.getWallpaper, System.Drawing.Imaging.ImageFormat.Png)
+
             'Clean house.
             graphicImage.Dispose()
             bitMapImage.Dispose()

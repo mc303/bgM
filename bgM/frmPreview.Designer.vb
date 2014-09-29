@@ -38,9 +38,10 @@ Partial Class frmPreview
         'lblScreenPos
         '
         Me.lblScreenPos.AutoSize = True
+        Me.lblScreenPos.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblScreenPos.Location = New System.Drawing.Point(25, 24)
         Me.lblScreenPos.Name = "lblScreenPos"
-        Me.lblScreenPos.Size = New System.Drawing.Size(39, 13)
+        Me.lblScreenPos.Size = New System.Drawing.Size(56, 18)
         Me.lblScreenPos.TabIndex = 1
         Me.lblScreenPos.Text = "Label1"
         '
