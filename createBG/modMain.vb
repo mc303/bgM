@@ -15,37 +15,7 @@ Module modMain
         Call createPreviewFromBackground()
         Call Wallpaper.Apply(_reg.getWallpaper)
 
-
         Application.Exit()
-    End Sub
-
-    Private Sub loadItemsFromRegistryAddToForm()
-        'Dim _inputFields As Integer = _reg.getInputFields()
-        '_wallpaper = _reg.getRegWallpaper()
-
-        'If Not _inputFields = 0 Then
-        '    For i As Integer = 0 To _inputFields - 1
-
-        '        With txt
-        '            .Text = _reg.getItemText(i.ToString("D2"))
-        '            .Name = "TextBox" & _nameN
-        '            .ContextMenuStrip = cmsItems
-        '            .ForeColor = ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2")))
-        '            .Size() = New System.Drawing.Size(_reg.getItemWidth(i.ToString("D2")), 21)
-        '            .Font = _reg.getItemFont(i.ToString("D2"))
-        '            .TextAlign = _reg.getItemAlign(i.ToString("D2"))
-        '            '.Location = Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
-        '            .Location = PointToClient(_Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2"))))
-        '            .BorderStyle = BorderStyle.FixedSingle
-        '        End With
-        '        Me.Controls.Add(txt)
-        '        Me.txt.BringToFront()
-        '        lbItems.Items.Add("TextBox" & _nameN)
-        '        _nameN = _nameN + 1
-        '    Next
-        'End If
-
-        '_inputFields = Nothing
     End Sub
 
     Sub createPreviewFromBackground()
@@ -91,15 +61,11 @@ Module modMain
                         _screenPos = New Point(_screenPos.X + (_reg.getItemWidth(i.ToString("D2")) / 2), _screenPos.Y)
                 End Select
 
-                'TextRenderer.DrawText(graphicImage, _txt.Text, _txt.Font, New Point(ScreenPos), _txt.ForeColor, Color.Transparent, TextFormatFlags.HorizontalCenter)
                 _envText = ConvertItems.itemToEnviromentVar(_txt)
 
                 'TextRenderer.DrawText()
                 graphicImage.DrawString(_envText, _reg.getItemFont(i.ToString("D2")), _color, _screenPos, stringFormat)
             Next
-
-            'I am drawing a oval around my text.
-            ' graphicImage.DrawArc(New Pen(Color.Red, 3), 90, 235, 150, 50, 0, 360)
 
             'Save the new image to the response output stream.
             bitMapImage.Save(_reg.getWallpaper, System.Drawing.Imaging.ImageFormat.Png)
