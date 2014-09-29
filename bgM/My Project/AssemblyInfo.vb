@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("WindowsApplication1")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyTitle("Background Manager")> 
+<Assembly: AssemblyDescription("Background Manager with User information")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("WindowsApplication1")> 
+<Assembly: AssemblyProduct("bgM")> 
 <Assembly: AssemblyCopyright("Copyright ©  2014")> 
 <Assembly: AssemblyTrademark("")> 
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.195.5385")> 
-<Assembly: AssemblyFileVersion("1.0.195.5385")> 
+<Assembly: AssemblyVersion("1.0.201.5385")> 
+<Assembly: AssemblyFileVersion("1.0.201.5385")> 

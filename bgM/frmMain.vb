@@ -38,6 +38,7 @@ Public Class frmMain
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Me.Visible = False
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
         Me.WindowState = FormWindowState.Maximized
         Dim _image As Bitmap
@@ -45,12 +46,12 @@ Public Class frmMain
         'check registry
         Call _reg.createRootKey()
 
+        'get default font style from registry
         Dim _fontstyle As FontStyle = _reg.getFontStyle
         Dim _font As Font = New Font(_reg.getFontFamily, Convert.ToSingle(_reg.getFontSize), _fontstyle)
-       
 
         With Me.Panel1
-            .Visible = True
+            .Visible = False
         End With
 
         With Me.tsMain
@@ -80,7 +81,7 @@ Public Class frmMain
             End If
             _regKey = Nothing
         Else
-            _image = ResizeImage.Image(_reg.getRegWallpaper, New Size(screenWidth, screenHeight), True)           
+            _image = ResizeImage.Image(_reg.getRegWallpaper, New Size(screenWidth, screenHeight), True)
         End If
 
         With Me.pbMainBackground
@@ -189,7 +190,7 @@ Public Class frmMain
         Me.tscmdFontColor.BackColor = ColorTranslator.FromWin32(_reg.getFontColor)
 
 
-
+        Me.Visible = True
     End Sub
 
     Public Function getFontStyle() As FontStyle
@@ -449,7 +450,7 @@ Public Class frmMain
     Private Sub txt_KeyDown(sender As Object, e As KeyEventArgs)
         Dim _controlMove As TextBox = DirectCast(sender, TextBox)
         _keyValue = e.KeyCode
-        txtBox3.Text = e.KeyCode
+
         Select Case e.KeyData
             Case (Keys.Control + Keys.Left)
                 _controlMove.Location = New Point(_controlMove.Left - 1, _controlMove.Top)

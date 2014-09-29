@@ -94,6 +94,7 @@ Partial Class frmMain
         Me.lbItems.Name = "lbItems"
         Me.lbItems.Size = New System.Drawing.Size(120, 95)
         Me.lbItems.TabIndex = 2
+        Me.lbItems.Visible = False
         '
         'cmsItems
         '
