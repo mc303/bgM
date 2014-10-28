@@ -73,16 +73,16 @@ Partial Class frmMain
         Me.tscmdSaveItems = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tscmdSettings = New System.Windows.Forms.ToolStripButton()
         Me.pbMainBackground = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.ofdOpenBackground = New System.Windows.Forms.OpenFileDialog()
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.sfdSaveColorBackground = New System.Windows.Forms.SaveFileDialog()
-        Me.tscmdSettings = New System.Windows.Forms.ToolStripButton()
         Me.plSettings = New System.Windows.Forms.Panel()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.lblScreenPos = New System.Windows.Forms.Label()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
@@ -481,6 +481,17 @@ Partial Class frmMain
         Me.ToolStripButton1.Name = "ToolStripButton1"
         Me.ToolStripButton1.Size = New System.Drawing.Size(6, 25)
         '
+        'tscmdSettings
+        '
+        Me.tscmdSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tscmdSettings.AutoToolTip = False
+        Me.tscmdSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tscmdSettings.Image = CType(resources.GetObject("tscmdSettings.Image"), System.Drawing.Image)
+        Me.tscmdSettings.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tscmdSettings.Name = "tscmdSettings"
+        Me.tscmdSettings.Size = New System.Drawing.Size(53, 22)
+        Me.tscmdSettings.Text = "Settings"
+        '
         'pbMainBackground
         '
         Me.pbMainBackground.Location = New System.Drawing.Point(432, 258)
@@ -510,17 +521,6 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(13, 22)
         '
-        'tscmdSettings
-        '
-        Me.tscmdSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tscmdSettings.AutoToolTip = False
-        Me.tscmdSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.tscmdSettings.Image = CType(resources.GetObject("tscmdSettings.Image"), System.Drawing.Image)
-        Me.tscmdSettings.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tscmdSettings.Name = "tscmdSettings"
-        Me.tscmdSettings.Size = New System.Drawing.Size(53, 22)
-        Me.tscmdSettings.Text = "Settings"
-        '
         'plSettings
         '
         Me.plSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -533,12 +533,14 @@ Partial Class frmMain
         Me.plSettings.TabIndex = 17
         Me.plSettings.Visible = False
         '
-        'TextBox1
+        'Button1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(12, 20)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(466, 20)
-        Me.TextBox1.TabIndex = 0
+        Me.Button1.Location = New System.Drawing.Point(484, 20)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(55, 20)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Save"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -549,14 +551,12 @@ Partial Class frmMain
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Save Wallpaper as filename: "
         '
-        'Button1
+        'TextBox1
         '
-        Me.Button1.Location = New System.Drawing.Point(484, 20)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(55, 20)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Save"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.TextBox1.Location = New System.Drawing.Point(12, 20)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(466, 20)
+        Me.TextBox1.TabIndex = 0
         '
         'lblScreenPos
         '
@@ -573,7 +573,7 @@ Partial Class frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1094, 373)
+        Me.ClientSize = New System.Drawing.Size(1094, 520)
         Me.ControlBox = False
         Me.Controls.Add(Me.lblScreenPos)
         Me.Controls.Add(Me.plSettings)

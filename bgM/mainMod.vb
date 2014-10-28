@@ -1,7 +1,8 @@
 ﻿Imports System.IO
+Imports System.Net
 
 Module mainMod
-   
+
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
 
@@ -26,6 +27,20 @@ Module mainMod
 
     End Sub
 
+
+    Public Function GetHostEntryIPv4() As IPHostEntry
+        Dim ipHostInfo As IPHostEntry = Dns.GetHostEntry(System.Net.Dns.GetHostName)
+
+        If Not IsNothing(ipHostInfo) Then
+            ipHostInfo.AddressList = Array.FindAll(ipHostInfo.AddressList, Function(n As IPAddress) n.AddressFamily = System.Net.Sockets.AddressFamily.InterNetwork)
+        End If
+
+        GetHostEntryIPv4 = ipHostInfo
+    End Function
+
+    Sub getWallpaper()
+
+    End Sub
     'Public Sub saveLocation(_lbl As Control)
 
     '    Dim _pX As Integer = _lbl.Left / (screenWidth / 100)
@@ -36,6 +51,6 @@ Module mainMod
     '    Call _reg.setRegY(_pY)
     'End Sub
 
-    
+
 
 End Module

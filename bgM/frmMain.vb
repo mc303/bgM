@@ -78,22 +78,29 @@ Public Class frmMain
         If _reg.getRegSourceWallpaper = "" Then
             Dim _regKey As RegistryKey
             _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
-            If _regKey.GetValue("Wallpaper") = "" Then
+            Dim _wallpaper As String = _regKey.GetValue("Wallpaper")
+            If _wallpaper = "" Then
                 _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Colors", False)
                 Dim _color As String() = _regKey.GetValue("Background").ToString.Split(" ")
                 Me.pbMainBackground.BackColor = ColorTranslator.FromOle(RGB(_color(0), _color(1), _color(2)))
             Else
-                _image = ResizeImage.Image(_regKey.GetValue("Wallpaper"), New Size(screenWidth, screenHeight), True)
+                _image = ResizeImage.Image(_wallpaper, New Size(screenWidth, screenHeight), False)
+                '_image = Bitmap.FromFile(_wallpaper)
+                txtOpenBackgroundFileName.Text = _wallpaper
             End If
             _regKey = Nothing
         Else
-            _image = ResizeImage.Image(_reg.getRegSourceWallpaper, New Size(screenWidth, screenHeight), True)
+            _image = ResizeImage.Image(_reg.getRegSourceWallpaper, New Size(screenWidth, screenHeight), False)
         End If
 
         With Me.pbMainBackground
-            .Dock = DockStyle.Fill
+            '.Dock = DockStyle.Fill
+            .Top = 0
+            .Left = 0
+            .Height = screenHeight
+            .Width = screenWidth
             .BorderStyle = BorderStyle.None
-            '.BackgroundImageLayout = ImageLayout.Center
+            '.BackgroundImageLayout = ImageLayout.Tile
             .BackgroundImage = _image
             .Visible = True
             .SendToBack()
@@ -134,7 +141,19 @@ Public Class frmMain
             .Items.Add("%USERNAME%")
             .Items.Add("%USERPROFILE%")
             .Items.Add("%WINDIR%")
-            .Items.Add("#IP#")
+            .Items.Add("#IP0#")
+            .Items.Add("#IP1#")
+            .Items.Add("#IP2#")
+            .Items.Add("#IP3#")
+            .Items.Add("#DNS0#")
+            .Items.Add("#DNS1#")
+            .Items.Add("#DNS2#")
+            .Items.Add("#DNS3#")
+            .Items.Add("#CPU#")
+            .Items.Add("#SUBNET0#")
+            .Items.Add("#GATEWAY#")
+            .Items.Add("#OSNAME#")
+            .Items.Add("#OSVERSION#")
         End With
 
         For Each Family As FontFamily In FontFamily.Families
@@ -244,7 +263,11 @@ Public Class frmMain
 
     Private Sub loadItemsFromRegistryAddToForm()
         Dim _inputFields As Integer = _reg.getInputFields()
-        Me.txtOpenBackgroundFileName.Text = _reg.getRegSourceWallpaper()
+        Dim _sourceWallpapere As String = _reg.getRegSourceWallpaper()
+
+        If _sourceWallpapere IsNot "" Then
+            Me.txtOpenBackgroundFileName.Text = _sourceWallpapere
+        End If
 
         If Not _inputFields = 0 Then
             For i As Integer = 0 To _inputFields - 1
@@ -599,7 +622,15 @@ Public Class frmMain
     End Sub
 
     Private Sub tscmdPreviewBG_Click(sender As Object, e As EventArgs) Handles tscmdPreviewBG.Click
-        Call frmPreview.Show()
+        Dim _txt As TextBox = txtOpenBackgroundFileName
+        If _txt.Text = "" Then
+            MsgBox("The background is configured with a solid color. You have to first an background", MsgBoxStyle.OkOnly, "Error")
+        Else
+            Call frmPreview.Show()
+        End If
+
+        _txt = Nothing
+
     End Sub
 
     Private Sub tscmdOpenBG_Click(sender As Object, e As EventArgs) Handles tscmdOpenBG.Click
@@ -611,7 +642,7 @@ Public Class frmMain
         If (ofdOpenBackground.ShowDialog() = DialogResult.OK) Then
             'Call _reg.setRegWallpaper(ofdOpenBG.FileName)
             Me.txtOpenBackgroundFileName.Text = ofdOpenBackground.FileName
-            Me.pbMainBackground.BackgroundImage = ResizeImage.Image(ofdOpenBackground.FileName, New Size(screenWidth, screenHeight), True)
+            Me.pbMainBackground.BackgroundImage = ResizeImage.Image(ofdOpenBackground.FileName, New Size(screenWidth, screenHeight), False)
             _notSaved = True
         End If
     End Sub

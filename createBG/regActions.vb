@@ -38,6 +38,22 @@ Public Class _reg
         _regKey = Nothing
     End Function
 
+    Public Shared Function getControlPannelWallpaper() As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
+        Return _regKey.GetValue("Wallpaper", "").ToString
+
+        _regKey = Nothing
+    End Function
+
+    Public Shared Function getControlPannelColorBackground() As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Colors", True)
+        Return _regKey.GetValue("Background", "").ToString
+
+        _regKey = Nothing
+    End Function
+
     Public Shared Function getRegX() As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)

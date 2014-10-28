@@ -24,9 +24,16 @@ Public Class frmPreview
 
         With Me.pbBackground
             .Visible = True
-            .Dock = DockStyle.Fill
-            .BackgroundImageLayout = ImageLayout.Center
-            .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), True)
+            '.Dock = DockStyle.Fill
+            .Top = 8
+            .Left = 8
+            .Width = screenWidth
+            .Height = screenHeight
+            .BackColor = Color.Red
+            '.BackgroundImage = Bitmap.FromFile(_txt.Text)
+            .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)
+
+            '.BackgroundImageLayout = ImageLayout.Stretch
             .SendToBack()
         End With
 
@@ -46,7 +53,8 @@ Public Class frmPreview
         Dim _color As Brush
         Dim _envText As String
         Dim stringFormat As New StringFormat()
-        
+
+       
         'Load the Image to be written on.
         Dim bitMapImage As Bitmap = pbBackground.BackgroundImage
         'Dim bitMapImage As Bitmap = Image.FromFile(_bg)
@@ -80,7 +88,7 @@ Public Class frmPreview
                     'stringFormat.LineAlignment = StringAlignment.Center
                     _screenPos = New Point(_screenPos.X + (_txt.Width / 2), _screenPos.Y)
             End Select
-            
+
             'TextRenderer.DrawText(graphicImage, _txt.Text, _txt.Font, New Point(ScreenPos), _txt.ForeColor, Color.Transparent, TextFormatFlags.HorizontalCenter)
             _envText = ConvertItems.itemToEnviromentVar(_txt.Text)
             'TextRenderer.DrawText()
