@@ -24,11 +24,11 @@ Public Class frmPreview
 
         With Me.pbBackground
             .Visible = True
-            '.Dock = DockStyle.Fill
-            .Top = 8
-            .Left = 8
-            .Width = screenWidth
-            .Height = screenHeight
+            .Dock = DockStyle.Fill
+            '.Top = 8
+            '.Left = 8
+            '.Width = screenWidth
+            '.Height = screenHeight
             .BackColor = Color.Red
             '.BackgroundImage = Bitmap.FromFile(_txt.Text)
             .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)

@@ -84,6 +84,7 @@ Partial Class frmMain
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.lblScreenPos = New System.Windows.Forms.Label()
+        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -109,66 +110,65 @@ Partial Class frmMain
         Me.cmsItems.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NamethingToolStripMenuItem, Me.FontToolStripMenuItem, Me.RemoveToolStripMenuItem, Me.ToolStripSeparator1, Me.FontToolStripMenuItem1, Me.ColorToolStripMenuItem, Me.SizeToolStripMenuItem, Me.AlignRightToolStripMenuItem, Me.AlignLeftToolStripMenuItem, Me.AlignCenterToolStripMenuItem})
         Me.cmsItems.Name = "ContextMenuStrip1"
         Me.cmsItems.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.cmsItems.ShowImageMargin = False
-        Me.cmsItems.Size = New System.Drawing.Size(116, 192)
+        Me.cmsItems.Size = New System.Drawing.Size(141, 192)
         '
         'NamethingToolStripMenuItem
         '
         Me.NamethingToolStripMenuItem.Enabled = False
         Me.NamethingToolStripMenuItem.Name = "NamethingToolStripMenuItem"
-        Me.NamethingToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.NamethingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.NamethingToolStripMenuItem.Text = "name-thing"
         '
         'FontToolStripMenuItem
         '
         Me.FontToolStripMenuItem.Name = "FontToolStripMenuItem"
-        Me.FontToolStripMenuItem.Size = New System.Drawing.Size(112, 6)
+        Me.FontToolStripMenuItem.Size = New System.Drawing.Size(149, 6)
         '
         'RemoveToolStripMenuItem
         '
         Me.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem"
-        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.RemoveToolStripMenuItem.Text = "Remove"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(112, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
         '
         'FontToolStripMenuItem1
         '
         Me.FontToolStripMenuItem1.Name = "FontToolStripMenuItem1"
-        Me.FontToolStripMenuItem1.Size = New System.Drawing.Size(115, 22)
+        Me.FontToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
         Me.FontToolStripMenuItem1.Text = "Font"
         '
         'ColorToolStripMenuItem
         '
         Me.ColorToolStripMenuItem.Name = "ColorToolStripMenuItem"
-        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ColorToolStripMenuItem.Text = "Color"
         '
         'SizeToolStripMenuItem
         '
         Me.SizeToolStripMenuItem.Name = "SizeToolStripMenuItem"
-        Me.SizeToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.SizeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SizeToolStripMenuItem.Text = "Size"
         '
         'AlignRightToolStripMenuItem
         '
         Me.AlignRightToolStripMenuItem.Name = "AlignRightToolStripMenuItem"
-        Me.AlignRightToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.AlignRightToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AlignRightToolStripMenuItem.Text = "Align Right"
         '
         'AlignLeftToolStripMenuItem
         '
         Me.AlignLeftToolStripMenuItem.Name = "AlignLeftToolStripMenuItem"
-        Me.AlignLeftToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.AlignLeftToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AlignLeftToolStripMenuItem.Text = "Align Left"
         '
         'AlignCenterToolStripMenuItem
         '
         Me.AlignCenterToolStripMenuItem.Name = "AlignCenterToolStripMenuItem"
-        Me.AlignCenterToolStripMenuItem.Size = New System.Drawing.Size(115, 22)
+        Me.AlignCenterToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.AlignCenterToolStripMenuItem.Text = "Align Center"
         '
         'txtBox1
@@ -524,6 +524,7 @@ Partial Class frmMain
         'plSettings
         '
         Me.plSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.plSettings.Controls.Add(Me.CheckedListBox1)
         Me.plSettings.Controls.Add(Me.Button1)
         Me.plSettings.Controls.Add(Me.Label1)
         Me.plSettings.Controls.Add(Me.TextBox1)
@@ -569,6 +570,17 @@ Partial Class frmMain
         Me.lblScreenPos.Text = "{ X=9999, Y=9999 }"
         Me.lblScreenPos.Visible = False
         '
+        'CheckedListBox1
+        '
+        Me.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.CheckedListBox1.CheckOnClick = True
+        Me.CheckedListBox1.FormattingEnabled = True
+        Me.CheckedListBox1.Items.AddRange(New Object() {"Text X, Y actual position ", "Text X, Y postion starts from right and bottom"})
+        Me.CheckedListBox1.Location = New System.Drawing.Point(12, 46)
+        Me.CheckedListBox1.Name = "CheckedListBox1"
+        Me.CheckedListBox1.Size = New System.Drawing.Size(262, 32)
+        Me.CheckedListBox1.TabIndex = 4
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -582,7 +594,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.tsMain)
         Me.Controls.Add(Me.plResize)
         Me.DoubleBuffered = True
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmMain"
@@ -664,5 +676,6 @@ Partial Class frmMain
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
     Friend WithEvents lblScreenPos As System.Windows.Forms.Label
+    Friend WithEvents CheckedListBox1 As System.Windows.Forms.CheckedListBox
 
 End Class

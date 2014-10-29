@@ -94,11 +94,11 @@ Public Class frmMain
         End If
 
         With Me.pbMainBackground
-            '.Dock = DockStyle.Fill
-            .Top = 0
-            .Left = 0
-            .Height = screenHeight
-            .Width = screenWidth
+            .Dock = DockStyle.Fill
+            '.Top = 0
+            '.Left = 0
+            '.Height = screenHeight
+            '.Width = screenWidth
             .BorderStyle = BorderStyle.None
             '.BackgroundImageLayout = ImageLayout.Tile
             .BackgroundImage = _image
@@ -328,6 +328,8 @@ Public Class frmMain
             _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
             _reg.setItemWidth(i.ToString("D2"), _txt.Width)
             _reg.setItemAlign(i.ToString("D2"), _txt.TextAlign)
+            _reg.setItemLocationInvert(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
+            _reg.setItemLocationPercent(i.ToString("D2"), (_screenPos.X / (screenWidth / 100)).ToString() + "," + (_screenPos.Y / (screenHeight / 100)).ToString())
             i = i + 1
         Next
 
@@ -345,6 +347,7 @@ Public Class frmMain
                     _reg.delItemLocation(i.ToString("D2"))
                     _reg.delItemWidth(i.ToString("D2"))
                     _reg.delItemAlign(i.ToString("D2"))
+                    _reg.delItemLocationInvert(i.ToString("D2"))
                 Catch ex As Exception
 
                 End Try

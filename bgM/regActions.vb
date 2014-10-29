@@ -175,6 +175,50 @@ Public Class _reg
         _regKey = Nothing
     End Sub
 
+    Public Shared Function getItemLocationInvert(_n As String) As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("text" & _n & "LocationInvert")
+
+        _regKey = Nothing
+    End Function
+
+    Public Shared Sub setItemLocationInvert(_n As String, _txtLocation As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.SetValue("text" & _n & "LocationInvert", _txtLocation, RegistryValueKind.String)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Sub delItemLocationInvert(_n As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.DeleteValue("text" & _n & "LocationInvert", False)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Function getItemLocationPercent(_n As String) As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("text" & _n & "LocationPercent")
+
+        _regKey = Nothing
+    End Function
+
+    Public Shared Sub setItemLocationPercent(_n As String, _txtLocation As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.SetValue("text" & _n & "LocationPercent", _txtLocation, RegistryValueKind.String)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Sub delItemLocationPercent(_n As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.DeleteValue("text" & _n & "LocationPercent", False)
+        _regKey = Nothing
+    End Sub
+
     Public Shared Function getItemColor(_n As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)

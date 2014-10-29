@@ -52,8 +52,9 @@ Partial Class frmPreview
         Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.Controls.Add(Me.lblScreenPos)
         Me.Controls.Add(Me.pbBackground)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "frmPreview"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Background Preview"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.pbBackground, System.ComponentModel.ISupportInitialize).EndInit()
