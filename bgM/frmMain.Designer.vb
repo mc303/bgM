@@ -80,11 +80,14 @@ Partial Class frmMain
         Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
         Me.sfdSaveColorBackground = New System.Windows.Forms.SaveFileDialog()
         Me.plSettings = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cmdOpenSourceBackground = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cbCoordinatesMode = New System.Windows.Forms.ComboBox()
+        Me.cmdSavedUserBackground = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtSaveWallpaper = New System.Windows.Forms.TextBox()
         Me.lblScreenPos = New System.Windows.Forms.Label()
-        Me.CheckedListBox1 = New System.Windows.Forms.CheckedListBox()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,59 +119,59 @@ Partial Class frmMain
         '
         Me.NamethingToolStripMenuItem.Enabled = False
         Me.NamethingToolStripMenuItem.Name = "NamethingToolStripMenuItem"
-        Me.NamethingToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.NamethingToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.NamethingToolStripMenuItem.Text = "name-thing"
         '
         'FontToolStripMenuItem
         '
         Me.FontToolStripMenuItem.Name = "FontToolStripMenuItem"
-        Me.FontToolStripMenuItem.Size = New System.Drawing.Size(149, 6)
+        Me.FontToolStripMenuItem.Size = New System.Drawing.Size(137, 6)
         '
         'RemoveToolStripMenuItem
         '
         Me.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem"
-        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.RemoveToolStripMenuItem.Text = "Remove"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(137, 6)
         '
         'FontToolStripMenuItem1
         '
         Me.FontToolStripMenuItem1.Name = "FontToolStripMenuItem1"
-        Me.FontToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.FontToolStripMenuItem1.Size = New System.Drawing.Size(140, 22)
         Me.FontToolStripMenuItem1.Text = "Font"
         '
         'ColorToolStripMenuItem
         '
         Me.ColorToolStripMenuItem.Name = "ColorToolStripMenuItem"
-        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ColorToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.ColorToolStripMenuItem.Text = "Color"
         '
         'SizeToolStripMenuItem
         '
         Me.SizeToolStripMenuItem.Name = "SizeToolStripMenuItem"
-        Me.SizeToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SizeToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.SizeToolStripMenuItem.Text = "Size"
         '
         'AlignRightToolStripMenuItem
         '
         Me.AlignRightToolStripMenuItem.Name = "AlignRightToolStripMenuItem"
-        Me.AlignRightToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AlignRightToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.AlignRightToolStripMenuItem.Text = "Align Right"
         '
         'AlignLeftToolStripMenuItem
         '
         Me.AlignLeftToolStripMenuItem.Name = "AlignLeftToolStripMenuItem"
-        Me.AlignLeftToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AlignLeftToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.AlignLeftToolStripMenuItem.Text = "Align Left"
         '
         'AlignCenterToolStripMenuItem
         '
         Me.AlignCenterToolStripMenuItem.Name = "AlignCenterToolStripMenuItem"
-        Me.AlignCenterToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.AlignCenterToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.AlignCenterToolStripMenuItem.Text = "Align Center"
         '
         'txtBox1
@@ -181,9 +184,9 @@ Partial Class frmMain
         'txtOpenBackgroundFileName
         '
         Me.txtOpenBackgroundFileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.txtOpenBackgroundFileName.Location = New System.Drawing.Point(6, 226)
+        Me.txtOpenBackgroundFileName.Location = New System.Drawing.Point(8, 22)
         Me.txtOpenBackgroundFileName.Name = "txtOpenBackgroundFileName"
-        Me.txtOpenBackgroundFileName.Size = New System.Drawing.Size(145, 20)
+        Me.txtOpenBackgroundFileName.Size = New System.Drawing.Size(528, 20)
         Me.txtOpenBackgroundFileName.TabIndex = 7
         '
         'txtBox3
@@ -485,6 +488,7 @@ Partial Class frmMain
         '
         Me.tscmdSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.tscmdSettings.AutoToolTip = False
+        Me.tscmdSettings.BackColor = System.Drawing.SystemColors.Control
         Me.tscmdSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.tscmdSettings.Image = CType(resources.GetObject("tscmdSettings.Image"), System.Drawing.Image)
         Me.tscmdSettings.ImageTransparentColor = System.Drawing.Color.Magenta
@@ -504,7 +508,6 @@ Partial Class frmMain
         '
         Me.Panel1.Controls.Add(Me.lbItems)
         Me.Panel1.Controls.Add(Me.txtBox1)
-        Me.Panel1.Controls.Add(Me.txtOpenBackgroundFileName)
         Me.Panel1.Controls.Add(Me.txtBox3)
         Me.Panel1.Location = New System.Drawing.Point(48, 172)
         Me.Panel1.Name = "Panel1"
@@ -524,40 +527,83 @@ Partial Class frmMain
         'plSettings
         '
         Me.plSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.plSettings.Controls.Add(Me.CheckedListBox1)
-        Me.plSettings.Controls.Add(Me.Button1)
+        Me.plSettings.Controls.Add(Me.Label3)
+        Me.plSettings.Controls.Add(Me.cmdOpenSourceBackground)
+        Me.plSettings.Controls.Add(Me.txtOpenBackgroundFileName)
+        Me.plSettings.Controls.Add(Me.Label2)
+        Me.plSettings.Controls.Add(Me.cbCoordinatesMode)
+        Me.plSettings.Controls.Add(Me.cmdSavedUserBackground)
         Me.plSettings.Controls.Add(Me.Label1)
-        Me.plSettings.Controls.Add(Me.TextBox1)
-        Me.plSettings.Location = New System.Drawing.Point(458, 48)
+        Me.plSettings.Controls.Add(Me.txtSaveWallpaper)
+        Me.plSettings.Location = New System.Drawing.Point(460, 46)
         Me.plSettings.Name = "plSettings"
-        Me.plSettings.Size = New System.Drawing.Size(544, 103)
+        Me.plSettings.Size = New System.Drawing.Size(544, 122)
         Me.plSettings.TabIndex = 17
         Me.plSettings.Visible = False
         '
-        'Button1
+        'Label3
         '
-        Me.Button1.Location = New System.Drawing.Point(484, 20)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(55, 20)
-        Me.Button1.TabIndex = 2
-        Me.Button1.Text = "Save"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(5, 4)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(117, 13)
+        Me.Label3.TabIndex = 7
+        Me.Label3.Text = "Source backgound file:"
+        '
+        'cmdOpenSourceBackground
+        '
+        Me.cmdOpenSourceBackground.Location = New System.Drawing.Point(476, 21)
+        Me.cmdOpenSourceBackground.Name = "cmdOpenSourceBackground"
+        Me.cmdOpenSourceBackground.Size = New System.Drawing.Size(60, 22)
+        Me.cmdOpenSourceBackground.TabIndex = 6
+        Me.cmdOpenSourceBackground.Text = "Open..."
+        Me.cmdOpenSourceBackground.UseVisualStyleBackColor = True
+        Me.cmdOpenSourceBackground.Visible = False
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(9, 94)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(118, 13)
+        Me.Label2.TabIndex = 4
+        Me.Label2.Text = "Text location on screen"
+        '
+        'cbCoordinatesMode
+        '
+        Me.cbCoordinatesMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbCoordinatesMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cbCoordinatesMode.Items.AddRange(New Object() {"Location", "Percent", "Invert"})
+        Me.cbCoordinatesMode.Location = New System.Drawing.Point(130, 91)
+        Me.cbCoordinatesMode.Name = "cbCoordinatesMode"
+        Me.cbCoordinatesMode.Size = New System.Drawing.Size(106, 21)
+        Me.cbCoordinatesMode.TabIndex = 3
+        '
+        'cmdSavedUserBackground
+        '
+        Me.cmdSavedUserBackground.Location = New System.Drawing.Point(476, 63)
+        Me.cmdSavedUserBackground.Name = "cmdSavedUserBackground"
+        Me.cmdSavedUserBackground.Size = New System.Drawing.Size(60, 22)
+        Me.cmdSavedUserBackground.TabIndex = 2
+        Me.cmdSavedUserBackground.Text = "File..."
+        Me.cmdSavedUserBackground.UseVisualStyleBackColor = True
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 4)
+        Me.Label1.Location = New System.Drawing.Point(5, 46)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(145, 13)
+        Me.Label1.Size = New System.Drawing.Size(105, 13)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Save Wallpaper as filename: "
+        Me.Label1.Text = "User background file"
         '
-        'TextBox1
+        'txtSaveWallpaper
         '
-        Me.TextBox1.Location = New System.Drawing.Point(12, 20)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(466, 20)
-        Me.TextBox1.TabIndex = 0
+        Me.txtSaveWallpaper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtSaveWallpaper.Location = New System.Drawing.Point(8, 64)
+        Me.txtSaveWallpaper.Name = "txtSaveWallpaper"
+        Me.txtSaveWallpaper.Size = New System.Drawing.Size(466, 20)
+        Me.txtSaveWallpaper.TabIndex = 0
         '
         'lblScreenPos
         '
@@ -570,21 +616,12 @@ Partial Class frmMain
         Me.lblScreenPos.Text = "{ X=9999, Y=9999 }"
         Me.lblScreenPos.Visible = False
         '
-        'CheckedListBox1
-        '
-        Me.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CheckedListBox1.CheckOnClick = True
-        Me.CheckedListBox1.FormattingEnabled = True
-        Me.CheckedListBox1.Items.AddRange(New Object() {"Text X, Y actual position ", "Text X, Y postion starts from right and bottom"})
-        Me.CheckedListBox1.Location = New System.Drawing.Point(12, 46)
-        Me.CheckedListBox1.Name = "CheckedListBox1"
-        Me.CheckedListBox1.Size = New System.Drawing.Size(262, 32)
-        Me.CheckedListBox1.TabIndex = 4
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoSize = True
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ClientSize = New System.Drawing.Size(1094, 520)
         Me.ControlBox = False
         Me.Controls.Add(Me.lblScreenPos)
@@ -672,10 +709,13 @@ Partial Class frmMain
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tscmdSettings As System.Windows.Forms.ToolStripButton
     Friend WithEvents plSettings As System.Windows.Forms.Panel
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents cmdSavedUserBackground As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents txtSaveWallpaper As System.Windows.Forms.TextBox
     Friend WithEvents lblScreenPos As System.Windows.Forms.Label
-    Friend WithEvents CheckedListBox1 As System.Windows.Forms.CheckedListBox
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents cbCoordinatesMode As System.Windows.Forms.ComboBox
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents cmdOpenSourceBackground As System.Windows.Forms.Button
 
 End Class

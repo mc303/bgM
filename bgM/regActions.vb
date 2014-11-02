@@ -7,14 +7,14 @@ Public Class _reg
         _regKey = Nothing
     End Sub
    
-    Public Shared Sub setRegSourceWallpaper(_bg As String)
+    Public Shared Sub setSourceWallpaper(_bg As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         _regKey.SetValue("SourceWallpaper", _bg, RegistryValueKind.String)
         _regKey = Nothing
     End Sub
 
-    Public Shared Function getRegSourceWallpaper() As String
+    Public Shared Function getSourceWallpaper() As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         Return _regKey.GetValue("SourceWallpaper", "").ToString
@@ -37,34 +37,18 @@ Public Class _reg
         _regKey = Nothing
     End Function
 
-    Public Shared Function getRegX() As String
+    Public Shared Function getCoordinatesMode() As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        Return _regKey.GetValue("X").ToString
+        Return _regKey.GetValue("CoordinatesMode").ToString
 
         _regKey = Nothing
     End Function
 
-    Public Shared Function getRegY() As String
+    Public Shared Sub setCoordinatesMode(_cm As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        Return _regKey.GetValue("Y").ToString
-
-        _regKey = Nothing
-    End Function
-
-    Public Shared Sub setRegX(_pX As Integer)
-        Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        _regKey.SetValue("X", _pX)
-
-        _regKey = Nothing
-    End Sub
-
-    Public Shared Sub setRegY(_pY As Integer)
-        Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        _regKey.SetValue("Y", _pY)
+        _regKey.SetValue("CoordinatesMode", _cm, RegistryValueKind.String)
 
         _regKey = Nothing
     End Sub

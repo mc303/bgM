@@ -1,15 +1,16 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Net.NetworkInformation
 
 Module mainMod
 
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
-
+    Public _networkinfo As New Dictionary(Of String, String)
 
     Public Sub loadPictureToMsToPicturebox()
         Dim _bgBox As PictureBox = frmMain.pbMainBackground
-        Dim _bg As String = _reg.getRegSourceWallpaper
+        Dim _bg As String = _reg.getSourceWallpaper
         Dim _imgToMemoryStream As New MemoryStream()
         Dim _bmImage As Bitmap = New System.Drawing.Bitmap(_bg)
 
@@ -40,6 +41,91 @@ Module mainMod
 
     Sub getWallpaper()
 
+    End Sub
+
+    Public Function getItemPosition(ByVal i As Integer) As Point
+        Dim _location As Point = New Point(0, 0)
+        Dim _cmode As String = _reg.getCoordinatesMode
+
+        If _cmode = "" Then _cmode = "Location"
+
+        Select Case _cmode
+            Case "Location"
+                'Return frmMain.PointToScreen(_Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2"))))
+                Return _Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
+            Case "Percent"
+                Dim _percoor As String() = _reg.getItemLocationPercent(i.ToString("D2")).Split(",")
+                Dim _x As Integer = (screenWidth / 100) * _percoor(0)
+                Dim _y As Integer = (screenHeight / 100) * _percoor(1)
+                Return frmMain.PointToScreen(New Point(_x, _y))
+
+            Case "Invert"
+                Dim _percoor As String() = _reg.getItemLocationPercent(i.ToString("D2")).Split(",")
+                Dim _x As Integer = screenWidth - _percoor(0)
+                Dim _y As Integer = screenHeight - _percoor(1)
+                Return frmMain.PointToScreen(New Point(_x, _y))
+
+        End Select
+
+    End Function
+
+
+    Public Sub createNetworkInformation()
+        Dim computerProperties As IPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties()
+        Dim nics As NetworkInterface() = NetworkInterface.GetAllNetworkInterfaces()
+        Dim _i As Integer = 0
+        Dim _i_item As Integer = 0
+
+        If nics Is Nothing OrElse nics.Length < 1 Then
+            Debug.Print("  No network interfaces found.")
+            Exit Sub
+        End If
+        For Each adapter As NetworkInterface In nics
+            Dim properties As IPInterfaceProperties = adapter.GetIPProperties()
+            Dim nicmac As PhysicalAddress = adapter.GetPhysicalAddress
+            Dim ipinfo As IPv4InterfaceProperties = adapter.GetIPProperties.GetIPv4Properties
+            Dim gateways As GatewayIPAddressInformationCollection = properties.GatewayAddresses
+
+            If adapter.NetworkInterfaceType = NetworkInterfaceType.Ethernet Then
+                _networkinfo.Add("#NIC" + _i.ToString + "-NAME#", adapter.Name)
+                _networkinfo.Add("#NIC" + _i.ToString + "-ID#", adapter.Id)
+                _networkinfo.Add("#NIC" + _i.ToString + "-DEVICENAME#", adapter.Description)
+                _networkinfo.Add("#NIC" + _i.ToString + "-MAC#", nicmac.ToString())
+                _networkinfo.Add("#NIC" + _i.ToString + "-DHCPSERVER#", properties.DhcpServerAddresses.First.ToString)
+                _networkinfo.Add("#NIC" + _i.ToString + "-GATEWAY#", gateways.First.Address.ToString)
+                _networkinfo.Add("#NIC" + _i.ToString + "-DNSSUFFIX#", properties.DnsSuffix.First.ToString)
+
+
+                _networkinfo.Add("#NIC" + _i.ToString + "-SPEED#", adapter.Speed.ToString)
+
+                _i_item = 0
+                For Each ip As System.Net.IPAddress In properties.DnsAddresses
+                    _networkinfo.Add("#NIC" + _i.ToString + "-DNS" + _i_item.ToString + "#", ip.ToString)
+                    _i_item = _i_item + 1
+                Next
+
+                _i_item = 0
+                For Each ip As UnicastIPAddressInformation In properties.UnicastAddresses
+                    If ip.Address.AddressFamily = Sockets.AddressFamily.InterNetwork Then
+                        If ip.Address.ToString.Contains(".") Then
+                            _networkinfo.Add("#NIC" + _i.ToString + "-IP" + _i_item.ToString + "#", ip.Address.ToString)
+                            _networkinfo.Add("#NIC" + _i.ToString + "-NETMASK" + _i_item.ToString + "#", ip.IPv4Mask.ToString)
+                            ' _networkinfo.Add("#NIC" + _i.ToString + "-SUFFIX" + _i_item.ToString + "#", ip.SuffixOrigin.ToString)
+                            _i_item = _i_item + 1
+                        Else
+                            _networkinfo.Add("#NIC" + _i.ToString + "-IP6" + _i_item.ToString + "#", ip.Address.ToString)
+                        End If
+                        _i_item = _i_item + 1
+                    End If
+                Next
+                'For Each ip As System.Net.IPAddress In properties.DhcpServerAddresses
+                '    Debug.Print("IP server : {0}", ip.ToString)
+                'Next
+                _i_item = 0
+                _i = _i + 1
+            End If
+        Next
+        Console.WriteLine()
     End Sub
     'Public Sub saveLocation(_lbl As Control)
 

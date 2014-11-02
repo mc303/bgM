@@ -1,5 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
-Imports System.Net
+Imports System.DirectoryServices.AccountManagement
 
 Public Class ConvertItems
 
@@ -30,43 +30,37 @@ Public Class ConvertItems
     End Function
 
     Private Shared Function hashToValue(ByVal _env As String) As String
-        _env = _env.Replace("#", "")
+        'Dim __env As String = _env.Replace("#", "")
+        'System.DirectoryServices.AccountManagement.UserPrincipal.FindByIdentity()
 
-        Select Case _env
-            Case "OSNAME"
+        Select Case True
+            Case _env.Contains("#OSNAME#")
                 Return My.Computer.Info.OSFullName
 
-            Case "OSVERSION"
+            Case _env.Contains("#OSVERSION#")
                 Return My.Computer.Info.OSVersion
 
-            Case "IP0"
-                Try
-                    Return GetHostEntryIPv4.AddressList(0).ToString
-                Catch ex As Exception
-                    Return "0.0.0.0"
-                End Try
+            Case _env.Contains("#DOMAIN#")
+                Return Environment.UserDomainName()
 
-            Case "IP1"
-                Try
-                    Return GetHostEntryIPv4.AddressList(1).ToString
-                Catch ex As Exception
-                    Return "0.0.0.0"
-                End Try
+            Case _env.Contains("#STARTTIME#")
+                Return Environment.TickCount.ToString
 
-            Case "IP2"
-                Try
-                    Return GetHostEntryIPv4.AddressList(2).ToString
-                Catch ex As Exception
-                    Return "0.0.0.0"
-                End Try
+            Case _env.Contains("#DISPLAYNAMEN#")
+                Return UserPrincipal.Current.DisplayName
 
-            Case "IP3"
+            Case _env.Contains("#UPN#")
+                Return UserPrincipal.Current.UserPrincipalName
+
+            Case _env.Contains("#NIC")
                 Try
-                    Return GetHostEntryIPv4.AddressList(3).ToString
+                    Return _networkinfo.Item(_env)
                 Catch ex As Exception
-                    Return "0.0.0.0"
+                    Return ""
                 End Try
         End Select
         Return _env
     End Function
+
+   
 End Class

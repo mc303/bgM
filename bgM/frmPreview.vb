@@ -19,16 +19,16 @@ Public Class frmPreview
     Private Sub frmPreview_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim _txt As TextBox = frmMain.txtOpenBackgroundFileName
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        Me.WindowState = FormWindowState.Maximized
-
+        'Me.WindowState = FormWindowState.Maximized
+        Me.Dock = DockStyle.Fill
 
         With Me.pbBackground
             .Visible = True
-            .Dock = DockStyle.Fill
-            '.Top = 8
-            '.Left = 8
-            '.Width = screenWidth
-            '.Height = screenHeight
+            '.Dock = DockStyle.Fill
+            .Top = 8
+            .Left = 8
+            .Width = screenWidth
+            .Height = screenHeight
             .BackColor = Color.Red
             '.BackgroundImage = Bitmap.FromFile(_txt.Text)
             .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)
@@ -71,7 +71,7 @@ Public Class frmPreview
             _txt = CType(frmMain.Controls(_item), TextBox)
             '_screenPos = _txt.PointToScreen(New Point(-21, -10))
             ' _screenPos = _txt.PointToScreen(New Point(-5, 0))
-            _screenPos = _txt.PointToScreen(New Point(0, 5))
+            _screenPos = _txt.PointToScreen(New Point(8, 13))
             'ScreenPos = _txt.Location
             _color = New SolidBrush(_txt.ForeColor)
             'Write your text.
@@ -88,7 +88,6 @@ Public Class frmPreview
                     'stringFormat.LineAlignment = StringAlignment.Center
                     _screenPos = New Point(_screenPos.X + (_txt.Width / 2), _screenPos.Y)
             End Select
-
             'TextRenderer.DrawText(graphicImage, _txt.Text, _txt.Font, New Point(ScreenPos), _txt.ForeColor, Color.Transparent, TextFormatFlags.HorizontalCenter)
             _envText = ConvertItems.itemToEnviromentVar(_txt.Text)
             'TextRenderer.DrawText()
@@ -108,9 +107,6 @@ Public Class frmPreview
         Me.pbBackground.BackgroundImage = Image.FromStream(_imgToMemoryStream)
         'Me.pbBackground.BackgroundImageLayout = ImageLayout.Stretch
     End Sub
-
-
- 
 
     Private Sub pbBackground_MouseMove(sender As Object, e As MouseEventArgs) Handles pbBackground.MouseMove
         Dim screenPos As Point = MousePosition()

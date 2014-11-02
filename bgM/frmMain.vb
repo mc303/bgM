@@ -40,11 +40,13 @@ Public Class frmMain
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.Visible = False
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        Me.WindowState = FormWindowState.Maximized
+        ' Me.WindowState = FormWindowState.Maximized
+        Me.Dock = DockStyle.Fill
         Dim _image As Bitmap
 
         'check registry
         Call _reg.createRootKey()
+        Call createNetworkInformation()
 
         'get default font style from registry
         Dim _fontstyle As FontStyle = _reg.getFontStyle
@@ -65,6 +67,10 @@ Public Class frmMain
             .Left = 8
         End With
 
+        Dim _cmode As String = _reg.getCoordinatesMode
+        If _cmode = "" Then _cmode = "Location"
+        cbCoordinatesMode.Text = _cmode
+        _cmode = Nothing
 
         plResize.Visible = False
 
@@ -75,7 +81,9 @@ Public Class frmMain
 
         Me.KeyPreview = True
 
-        If _reg.getRegSourceWallpaper = "" Then
+        txtSaveWallpaper.Text = _reg.getWallpaper
+
+        If _reg.getSourceWallpaper = "" Then
             Dim _regKey As RegistryKey
             _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", False)
             Dim _wallpaper As String = _regKey.GetValue("Wallpaper")
@@ -90,7 +98,7 @@ Public Class frmMain
             End If
             _regKey = Nothing
         Else
-            _image = ResizeImage.Image(_reg.getRegSourceWallpaper, New Size(screenWidth, screenHeight), False)
+            _image = ResizeImage.Image(_reg.getSourceWallpaper, New Size(screenWidth, screenHeight), False)
         End If
 
         With Me.pbMainBackground
@@ -141,19 +149,13 @@ Public Class frmMain
             .Items.Add("%USERNAME%")
             .Items.Add("%USERPROFILE%")
             .Items.Add("%WINDIR%")
-            .Items.Add("#IP0#")
-            .Items.Add("#IP1#")
-            .Items.Add("#IP2#")
-            .Items.Add("#IP3#")
-            .Items.Add("#DNS0#")
-            .Items.Add("#DNS1#")
-            .Items.Add("#DNS2#")
-            .Items.Add("#DNS3#")
-            .Items.Add("#CPU#")
-            .Items.Add("#SUBNET0#")
-            .Items.Add("#GATEWAY#")
             .Items.Add("#OSNAME#")
             .Items.Add("#OSVERSION#")
+            .Items.Add("#UPN#")
+            .Items.Add("#DISPLAYNAMEN#")
+            For Each item In _networkinfo
+                .Items.Add(item.Key)
+            Next
         End With
 
         For Each Family As FontFamily In FontFamily.Families
@@ -214,7 +216,6 @@ Public Class frmMain
         Me.ColorDialog1.Color = ColorTranslator.FromWin32(_reg.getFontColor)
         Me.tscmdFontColor.BackColor = ColorTranslator.FromWin32(_reg.getFontColor)
 
-
         Me.Visible = True
     End Sub
 
@@ -263,7 +264,7 @@ Public Class frmMain
 
     Private Sub loadItemsFromRegistryAddToForm()
         Dim _inputFields As Integer = _reg.getInputFields()
-        Dim _sourceWallpapere As String = _reg.getRegSourceWallpaper()
+        Dim _sourceWallpapere As String = _reg.getSourceWallpaper()
 
         If _sourceWallpapere IsNot "" Then
             Me.txtOpenBackgroundFileName.Text = _sourceWallpapere
@@ -289,7 +290,7 @@ Public Class frmMain
                     .Font = _reg.getItemFont(i.ToString("D2"))
                     .TextAlign = _reg.getItemAlign(i.ToString("D2"))
                     '.Location = Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
-                    .Location = PointToClient(_Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2"))))
+                    .Location = getItemPosition(i)
                     .BorderStyle = BorderStyle.FixedSingle
                 End With
                 Me.Controls.Add(txt)
@@ -312,7 +313,9 @@ Public Class frmMain
         'txtBox3.Text = ScreenPos.ToString
         lblScreenPos.Text = _screenPos.ToString
         _reg.setInputFields(Me.Controls.OfType(Of TextBox).Count)
-        _reg.setRegSourceWallpaper(Me.txtOpenBackgroundFileName.Text)
+        _reg.setSourceWallpaper(Me.txtOpenBackgroundFileName.Text)
+        _reg.setCoordinatesMode(cbCoordinatesMode.Text)
+        _reg.setWallpaper(txtSaveWallpaper.Text)
         '_reg.setFont(FontDialog1.Font.ToString)
 
         Call _reg.setFontFamily(tscbFontFamilies.Text)
@@ -362,7 +365,7 @@ Public Class frmMain
         Dim _txt As TextBox
         Dim i As Integer = 0
         Dim _screenPos As Point
-        'Dim _imgToMemoryStream As New MemoryStream()
+        Dim _envText As String
         Dim _color As Brush
 
         Dim stringFormat As New StringFormat()
@@ -382,7 +385,7 @@ Public Class frmMain
         For Each _item As String In Me.lbItems.Items
             _txt = CType(Me.Controls(_item), TextBox)
             '_screenPos = _txt.PointToScreen(New Point(-21, -10))
-            _screenPos = _txt.PointToScreen(New Point(-5, 0))
+            _screenPos = _txt.PointToScreen(New Point(0, 5))
             'ScreenPos = _txt.Location
             _color = New SolidBrush(_txt.ForeColor)
             'Write your text.
@@ -399,16 +402,10 @@ Public Class frmMain
                     'stringFormat.LineAlignment = StringAlignment.Center
                     _screenPos = New Point(_screenPos.X + (_txt.Width / 2), _screenPos.Y)
             End Select
-
-            'TextRenderer.DrawText(graphicImage, _txt.Text, _txt.Font, New Point(ScreenPos), _txt.ForeColor, Color.Transparent, TextFormatFlags.HorizontalCenter)
-
+            _envText = ConvertItems.itemToEnviromentVar(_txt.Text)
             'TextRenderer.DrawText()
-            graphicImage.DrawString(_txt.Text, _txt.Font, _color, _screenPos, stringFormat)
-
+            graphicImage.DrawString(_envText, _txt.Font, _color, _screenPos, stringFormat)
         Next
-
-        'I am drawing a oval around my text.
-        ' graphicImage.DrawArc(New Pen(Color.Red, 3), 90, 235, 150, 50, 0, 360)
 
         'Save the new image to the response output stream.
         bitMapImage.Save(_bg, System.Drawing.Imaging.ImageFormat.Png)
@@ -646,6 +643,7 @@ Public Class frmMain
             'Call _reg.setRegWallpaper(ofdOpenBG.FileName)
             Me.txtOpenBackgroundFileName.Text = ofdOpenBackground.FileName
             Me.pbMainBackground.BackgroundImage = ResizeImage.Image(ofdOpenBackground.FileName, New Size(screenWidth, screenHeight), False)
+            _reg.setSourceWallpaper(ofdOpenBackground.FileName)
             _notSaved = True
         End If
     End Sub
@@ -698,7 +696,7 @@ Public Class frmMain
     Private Sub txtOpenBackgroundFileName_TextChanged(sender As Object, e As EventArgs) Handles txtOpenBackgroundFileName.TextChanged
         Dim _txt As TextBox = DirectCast(sender, TextBox)
 
-        If Not _txt.Text = _reg.getRegSourceWallpaper Then
+        If Not _txt.Text = _reg.getSourceWallpaper Then
             _notSaved = True
         End If
     End Sub
@@ -820,16 +818,53 @@ Public Class frmMain
 
     Private Sub tscmdSettings_Click(sender As Object, e As EventArgs) Handles tscmdSettings.Click
         If Me.plSettings.Visible Then
+            tscmdSettings.BackColor = SystemColors.Control
             With Me.plSettings
 
                 .Visible = False
             End With
         Else
+            tscmdSettings.BackColor = SystemColors.ActiveCaption
             With Me.plSettings
-                .Top = tsMain.Top + tscmdSettings.Height + 5
+                .Top = tsMain.Top + tscmdSettings.Height + 4
                 .Visible = True
             End With
         End If
         
+    End Sub
+
+    Private Sub cmdSavedUserBackground_Click(sender As Object, e As EventArgs) Handles cmdSavedUserBackground.Click
+        With Me.sfdSaveColorBackground
+            .Filter = "PNG Files | *.png"
+            .DefaultExt = "png"
+        End With
+
+        If (sfdSaveColorBackground.ShowDialog() = DialogResult.OK) Then
+            txtSaveWallpaper.Text = sfdSaveColorBackground.FileName
+            _reg.setWallpaper(sfdSaveColorBackground.FileName)
+        End If
+    End Sub
+
+    Private Sub cbCoordinatesMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbCoordinatesMode.SelectedIndexChanged
+        _reg.setCoordinatesMode(cbCoordinatesMode.Text)
+    End Sub
+
+    Private Sub cmdOpenSourceBackground_Click(sender As Object, e As EventArgs) Handles cmdOpenSourceBackground.Click
+        With Me.ofdOpenBackground
+            .Filter = "PNG Files|*.png|JPEG Files|*.jpg"
+            .DefaultExt = "png"
+        End With
+
+        If (ofdOpenBackground.ShowDialog() = DialogResult.OK) Then
+            'Call _reg.setRegWallpaper(ofdOpenBG.FileName)
+            Me.txtOpenBackgroundFileName.Text = ofdOpenBackground.FileName
+            Me.pbMainBackground.BackgroundImage = ResizeImage.Image(ofdOpenBackground.FileName, New Size(screenWidth, screenHeight), False)
+            _reg.setSourceWallpaper(ofdOpenBackground.FileName)
+            _notSaved = True
+        End If
+    End Sub
+
+    Private Sub ApplyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyToolStripMenuItem.Click
+
     End Sub
 End Class
