@@ -624,7 +624,7 @@ Public Class frmMain
     Private Sub tscmdPreviewBG_Click(sender As Object, e As EventArgs) Handles tscmdPreviewBG.Click
         Dim _txt As TextBox = txtOpenBackgroundFileName
         If _txt.Text = "" Then
-            MsgBox("The background is configured with a solid color. You have to first an background", MsgBoxStyle.OkOnly, "Error")
+            MsgBox("The background is configured with a solid color. It is not possible to load the default background. First you have to create or open a background", MsgBoxStyle.OkOnly, "Error")
         Else
             Call frmPreview.Show()
         End If

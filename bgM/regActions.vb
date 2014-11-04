@@ -40,7 +40,7 @@ Public Class _reg
     Public Shared Function getCoordinatesMode() As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        Return _regKey.GetValue("CoordinatesMode").ToString
+        Return _regKey.GetValue("CoordinatesMode", "Location").ToString
 
         _regKey = Nothing
     End Function

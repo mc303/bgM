@@ -8,14 +8,14 @@ Public Class _reg
         _regKey = Nothing
     End Sub
 
-    Public Shared Sub setRegSourceWallpaper(_bg As String)
+    Public Shared Sub setSourceWallpaper(_bg As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         _regKey.SetValue("SourceWallpaper", _bg, RegistryValueKind.String)
         _regKey = Nothing
     End Sub
 
-    Public Shared Function getRegSourceWallpaper() As String
+    Public Shared Function getSourceWallpaper() As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         Return _regKey.GetValue("SourceWallpaper", "").ToString
@@ -38,50 +38,18 @@ Public Class _reg
         _regKey = Nothing
     End Function
 
-    Public Shared Function getControlPannelWallpaper() As String
+    Public Shared Function getCoordinatesMode() As String
         Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Desktop", True)
-        Return _regKey.GetValue("Wallpaper", "").ToString
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("CoordinatesMode", "Location").ToString
 
         _regKey = Nothing
     End Function
 
-    Public Shared Function getControlPannelColorBackground() As String
-        Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Control Panel\Colors", True)
-        Return _regKey.GetValue("Background", "").ToString
-
-        _regKey = Nothing
-    End Function
-
-    Public Shared Function getRegX() As String
+    Public Shared Sub setCoordinatesMode(_cm As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        Return _regKey.GetValue("X").ToString
-
-        _regKey = Nothing
-    End Function
-
-    Public Shared Function getRegY() As String
-        Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        Return _regKey.GetValue("Y").ToString
-
-        _regKey = Nothing
-    End Function
-
-    Public Shared Sub setRegX(_pX As Integer)
-        Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        _regKey.SetValue("X", _pX)
-
-        _regKey = Nothing
-    End Sub
-
-    Public Shared Sub setRegY(_pY As Integer)
-        Dim _regKey As RegistryKey
-        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
-        _regKey.SetValue("Y", _pY)
+        _regKey.SetValue("CoordinatesMode", _cm, RegistryValueKind.String)
 
         _regKey = Nothing
     End Sub
@@ -189,6 +157,50 @@ Public Class _reg
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         _regKey.DeleteValue("text" & _n & "Location", False)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Function getItemLocationInvert(_n As String) As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("text" & _n & "LocationInvert")
+
+        _regKey = Nothing
+    End Function
+
+    Public Shared Sub setItemLocationInvert(_n As String, _txtLocation As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.SetValue("text" & _n & "LocationInvert", _txtLocation, RegistryValueKind.String)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Sub delItemLocationInvert(_n As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.DeleteValue("text" & _n & "LocationInvert", False)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Function getItemLocationPercent(_n As String) As String
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        Return _regKey.GetValue("text" & _n & "LocationPercent")
+
+        _regKey = Nothing
+    End Function
+
+    Public Shared Sub setItemLocationPercent(_n As String, _txtLocation As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.SetValue("text" & _n & "LocationPercent", _txtLocation, RegistryValueKind.String)
+        _regKey = Nothing
+    End Sub
+
+    Public Shared Sub delItemLocationPercent(_n As String)
+        Dim _regKey As RegistryKey
+        _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
+        _regKey.DeleteValue("text" & _n & "LocationPercent", False)
         _regKey = Nothing
     End Sub
 
@@ -322,6 +334,7 @@ Public Class _reg
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey("Software\bgM", True)
         Return _regKey.GetValue("Wait", 0)
+
         _regKey = Nothing
     End Function
 

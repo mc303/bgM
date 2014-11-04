@@ -85,17 +85,14 @@ Module mainMod
             Dim nicmac As PhysicalAddress = adapter.GetPhysicalAddress
             Dim ipinfo As IPv4InterfaceProperties = adapter.GetIPProperties.GetIPv4Properties
             Dim gateways As GatewayIPAddressInformationCollection = properties.GatewayAddresses
-
             If adapter.NetworkInterfaceType = NetworkInterfaceType.Ethernet Then
                 _networkinfo.Add("#NIC" + _i.ToString + "-NAME#", adapter.Name)
                 _networkinfo.Add("#NIC" + _i.ToString + "-ID#", adapter.Id)
                 _networkinfo.Add("#NIC" + _i.ToString + "-DEVICENAME#", adapter.Description)
                 _networkinfo.Add("#NIC" + _i.ToString + "-MAC#", nicmac.ToString())
-                _networkinfo.Add("#NIC" + _i.ToString + "-DHCPSERVER#", properties.DhcpServerAddresses.First.ToString)
+                If ipinfo.IsDhcpEnabled Then _networkinfo.Add("#NIC" + _i.ToString + "-DHCPSERVER#", properties.DhcpServerAddresses.First.ToString)
                 _networkinfo.Add("#NIC" + _i.ToString + "-GATEWAY#", gateways.First.Address.ToString)
-                _networkinfo.Add("#NIC" + _i.ToString + "-DNSSUFFIX#", properties.DnsSuffix.First.ToString)
-
-
+                If Not properties.DnsSuffix.ToString = "" Then _networkinfo.Add("#NIC" + _i.ToString + "-DNSSUFFIX#", properties.DnsSuffix.ToString)
                 _networkinfo.Add("#NIC" + _i.ToString + "-SPEED#", adapter.Speed.ToString)
 
                 _i_item = 0
@@ -107,20 +104,15 @@ Module mainMod
                 _i_item = 0
                 For Each ip As UnicastIPAddressInformation In properties.UnicastAddresses
                     If ip.Address.AddressFamily = Sockets.AddressFamily.InterNetwork Then
-                        If ip.Address.ToString.Contains(".") Then
-                            _networkinfo.Add("#NIC" + _i.ToString + "-IP" + _i_item.ToString + "#", ip.Address.ToString)
-                            _networkinfo.Add("#NIC" + _i.ToString + "-NETMASK" + _i_item.ToString + "#", ip.IPv4Mask.ToString)
-                            ' _networkinfo.Add("#NIC" + _i.ToString + "-SUFFIX" + _i_item.ToString + "#", ip.SuffixOrigin.ToString)
-                            _i_item = _i_item + 1
-                        Else
-                            _networkinfo.Add("#NIC" + _i.ToString + "-IP6" + _i_item.ToString + "#", ip.Address.ToString)
-                        End If
+                        _networkinfo.Add("#NIC" + _i.ToString + "-IP" + _i_item.ToString + "#", ip.Address.ToString)
+                        _networkinfo.Add("#NIC" + _i.ToString + "-NETMASK" + _i_item.ToString + "#", ip.IPv4Mask.ToString)
+                        ' _networkinfo.Add("#NIC" + _i.ToString + "-SUFFIX" + _i_item.ToString + "#", ip.SuffixOrigin.ToString)
                         _i_item = _i_item + 1
+                        'ElseIf ip.Address.AddressFamily = Sockets.AddressFamily.InterNetworkV6 Then
+                        '    _networkinfo.Add("#NIC" + _i.ToString + "-IP6" + _i_item.ToString + "#", ip.Address.ToString)
+                        '    _i_item = _i_item + 1
                     End If
                 Next
-                'For Each ip As System.Net.IPAddress In properties.DhcpServerAddresses
-                '    Debug.Print("IP server : {0}", ip.ToString)
-                'Next
                 _i_item = 0
                 _i = _i + 1
             End If
