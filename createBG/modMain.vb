@@ -17,6 +17,7 @@ Module modMain
     Sub Main()
         Dim _sleep As Integer = _reg.getWait * 1000
         Thread.Sleep(_sleep)
+        Call createNetworkInformation()
         Call createPreviewFromBackground()
         Call Wallpaper.Apply(_reg.getWallpaper)
         Application.Exit()

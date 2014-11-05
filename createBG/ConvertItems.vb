@@ -4,9 +4,10 @@ Imports System.DirectoryServices.AccountManagement
 Public Class ConvertItems
 
     '  ^\%.*\%$
+    ' <PRE>(.*?\n)*<\/PRE> 
     Public Shared Function itemToEnviromentVar(ByVal _env As String) As String
         Dim expression As Regex
-        expression = New Regex("^\%.*\%$")
+        expression = New Regex("%(.*?\n)*%")
         If expression.Match(_env).Success Then
             Return Environment.GetEnvironmentVariable(_env.Replace("%", ""))
         End If
