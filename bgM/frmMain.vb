@@ -75,13 +75,13 @@ Public Class frmMain
         plResize.Visible = False
 
         With Me.nudResize
-            .Maximum = 500
-            .Minimum = 50
+            .Maximum = screenWidth
+            .Minimum = 5
         End With
 
         Me.KeyPreview = True
 
-        txtSaveWallpaper.Text = _reg.getWallpaper
+        Me.txtSaveWallpaper.Text = _reg.getWallpaper
 
         If _reg.getSourceWallpaper = "" Then
             Dim _regKey As RegistryKey
@@ -94,7 +94,8 @@ Public Class frmMain
             Else
                 _image = ResizeImage.Image(_wallpaper, New Size(screenWidth, screenHeight), False)
                 '_image = Bitmap.FromFile(_wallpaper)
-                txtOpenBackgroundFileName.Text = _wallpaper
+                Me.txtOpenBackgroundFileName.Text = _wallpaper
+                Me.ApplyToolStripMenuItem.Enabled = True
             End If
             _regKey = Nothing
         Else
@@ -159,9 +160,9 @@ Public Class frmMain
         End With
 
         For Each Family As FontFamily In FontFamily.Families
-            tscbFontFamilies.Items.Add(Family.Name)
+            Me.tscbFontFamilies.Items.Add(Family.Name)
         Next
-        tscbFontFamilies.Text = _reg.getFontFamily
+        Me.tscbFontFamilies.Text = _reg.getFontFamily
 
         With Me.tscbFontSize
             .Items.Add("8")
@@ -181,34 +182,34 @@ Public Class frmMain
             .Items.Add("48")
             .Items.Add("72")
         End With
-        tscbFontSize.Text = _reg.getFontSize
+        Me.tscbFontSize.Text = _reg.getFontSize
 
         Select Case _fontstyle
             Case FontStyle.Bold
-                tscmdFontBold.Checked = True
+                Me.tscmdFontBold.Checked = True
 
             Case FontStyle.Italic
-                tscmdFontItalic.Checked = True
+                Me.tscmdFontItalic.Checked = True
 
             Case FontStyle.Underline
-                tscmdFontUnderline.Checked = True
+                Me.tscmdFontUnderline.Checked = True
 
             Case FontStyle.Bold Or FontStyle.Italic
-                tscmdFontBold.Checked = True
-                tscmdFontItalic.Checked = True
+                Me.tscmdFontBold.Checked = True
+                Me.tscmdFontItalic.Checked = True
 
             Case FontStyle.Bold Or FontStyle.Underline
-                tscmdFontBold.Checked = True
-                tscmdFontUnderline.Checked = True
+                Me.tscmdFontBold.Checked = True
+                Me.tscmdFontUnderline.Checked = True
 
             Case FontStyle.Italic Or FontStyle.Underline
-                tscmdFontItalic.Checked = True
-                tscmdFontUnderline.Checked = True
+                Me.tscmdFontItalic.Checked = True
+                Me.tscmdFontUnderline.Checked = True
 
             Case FontStyle.Bold Or FontStyle.Italic Or FontStyle.Underline
-                tscmdFontBold.Checked = True
-                tscmdFontItalic.Checked = True
-                tscmdFontUnderline.Checked = True
+                Me.tscmdFontBold.Checked = True
+                Me.tscmdFontItalic.Checked = True
+                Me.tscmdFontUnderline.Checked = True
         End Select
 
 
@@ -222,9 +223,9 @@ Public Class frmMain
     Public Function getFontStyle() As FontStyle
         Dim _fontstyle As FontStyle = FontStyle.Regular
 
-        If tscmdFontBold.Checked Then _fontstyle = _fontstyle Or FontStyle.Bold
-        If tscmdFontItalic.Checked Then _fontstyle = _fontstyle Or FontStyle.Italic
-        If tscmdFontUnderline.Checked Then _fontstyle = _fontstyle Or FontStyle.Underline
+        If Me.tscmdFontBold.Checked Then _fontstyle = _fontstyle Or FontStyle.Bold
+        If Me.tscmdFontItalic.Checked Then _fontstyle = _fontstyle Or FontStyle.Italic
+        If Me.tscmdFontUnderline.Checked Then _fontstyle = _fontstyle Or FontStyle.Underline
 
         Return _fontstyle
     End Function
@@ -256,7 +257,7 @@ Public Class frmMain
 
         Me.Controls.Add(txt)
         Me.txt.BringToFront()
-        lbItems.Items.Add("TextBox" & _nameN)
+        Me.lbItems.Items.Add("TextBox" & _nameN)
         _nameN = _nameN + 1
         _font = Nothing
     End Sub
@@ -295,7 +296,7 @@ Public Class frmMain
                 End With
                 Me.Controls.Add(txt)
                 Me.txt.BringToFront()
-                lbItems.Items.Add("TextBox" & _nameN)
+                Me.lbItems.Items.Add("TextBox" & _nameN)
                 _nameN = _nameN + 1
             Next
         End If
@@ -596,10 +597,10 @@ Public Class frmMain
     End Sub
 
     Private Sub cmdResize_Click(sender As Object, e As EventArgs) Handles cmdResize.Click
-        Dim _txt As TextBox = Me.nudResize.Tag
-        _txt.Width = Integer.Parse(nudResize.Text)
+        'Dim _txt As TextBox = Me.nudResize.Tag
+        '_txt.Width = Integer.Parse(nudResize.Text)
         plResize.Visible = False
-        _txt = Nothing
+        '_txt = Nothing
         Me.nudResize.Tag = Nothing
     End Sub
 
@@ -842,6 +843,7 @@ Public Class frmMain
         If (sfdSaveColorBackground.ShowDialog() = DialogResult.OK) Then
             txtSaveWallpaper.Text = sfdSaveColorBackground.FileName
             _reg.setWallpaper(sfdSaveColorBackground.FileName)
+
         End If
     End Sub
 
@@ -865,6 +867,31 @@ Public Class frmMain
     End Sub
 
     Private Sub ApplyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ApplyToolStripMenuItem.Click
+        Dim _bg As String = _reg.getWallpaper
 
+        If Not _bg.Length = 0 Then
+            Call Wallpaper.Apply(_reg.getWallpaper)
+        End If
+    End Sub
+
+    Private Sub txtSaveWallpaper_TextChanged(sender As Object, e As EventArgs) Handles txtSaveWallpaper.TextChanged
+        If Not txtSaveWallpaper.Text = "" Then
+            Me.ApplyToolStripMenuItem.Enabled = True
+        End If
+    End Sub
+
+    Private Sub nudResize_ValueChanged(sender As Object, e As EventArgs) Handles nudResize.ValueChanged
+        If Me.nudResize.Tag IsNot Nothing Then
+            Dim _txt As TextBox = Me.nudResize.Tag
+            If Not Integer.Parse(nudResize.Text) <= 1 Then
+                _txt.Width = Integer.Parse(nudResize.Text)
+            End If
+        End If
+
+        '_txt.Width = Integer.Parse(nudResize.Text)
+        
+        'plResize.Visible = False
+        '_txt = Nothing
+        'Me.nudResize.Tag = Nothing
     End Sub
 End Class

@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{57360414-EDE3-4CBB-8FD2-190F10EE7D84}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>bgM.My.MyApplication</StartupObject>
+    <StartupObject>bgM.frmMain</StartupObject>
     <RootNamespace>bgM</RootNamespace>
     <AssemblyName>bgM</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>

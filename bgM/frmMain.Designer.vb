@@ -183,9 +183,11 @@ Partial Class frmMain
         '
         'txtOpenBackgroundFileName
         '
+        Me.txtOpenBackgroundFileName.BackColor = System.Drawing.SystemColors.HighlightText
         Me.txtOpenBackgroundFileName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtOpenBackgroundFileName.Location = New System.Drawing.Point(8, 22)
         Me.txtOpenBackgroundFileName.Name = "txtOpenBackgroundFileName"
+        Me.txtOpenBackgroundFileName.ReadOnly = True
         Me.txtOpenBackgroundFileName.Size = New System.Drawing.Size(528, 20)
         Me.txtOpenBackgroundFileName.TabIndex = 7
         '
@@ -204,27 +206,29 @@ Partial Class frmMain
         Me.plResize.Cursor = System.Windows.Forms.Cursors.Default
         Me.plResize.Location = New System.Drawing.Point(593, 305)
         Me.plResize.Name = "plResize"
-        Me.plResize.Size = New System.Drawing.Size(190, 36)
+        Me.plResize.Size = New System.Drawing.Size(178, 34)
         Me.plResize.TabIndex = 12
         '
         'nudResize
         '
         Me.nudResize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.nudResize.Location = New System.Drawing.Point(4, 6)
+        Me.nudResize.Minimum = New Decimal(New Integer() {5, 0, 0, 0})
         Me.nudResize.Name = "nudResize"
         Me.nudResize.Size = New System.Drawing.Size(97, 20)
         Me.nudResize.TabIndex = 3
         Me.nudResize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.nudResize.ThousandsSeparator = True
+        Me.nudResize.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
         'cmdResize
         '
         Me.cmdResize.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdResize.Location = New System.Drawing.Point(106, 5)
+        Me.cmdResize.Location = New System.Drawing.Point(107, 4)
         Me.cmdResize.Name = "cmdResize"
-        Me.cmdResize.Size = New System.Drawing.Size(75, 23)
+        Me.cmdResize.Size = New System.Drawing.Size(63, 23)
         Me.cmdResize.TabIndex = 0
-        Me.cmdResize.Text = "Resize"
+        Me.cmdResize.Text = "Close"
         Me.cmdResize.UseVisualStyleBackColor = True
         '
         'tsMain
@@ -281,6 +285,7 @@ Partial Class frmMain
         '
         'ApplyToolStripMenuItem
         '
+        Me.ApplyToolStripMenuItem.Enabled = False
         Me.ApplyToolStripMenuItem.Name = "ApplyToolStripMenuItem"
         Me.ApplyToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.ApplyToolStripMenuItem.Text = "Apply Background"
@@ -489,6 +494,7 @@ Partial Class frmMain
         Me.tscmdSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
         Me.tscmdSettings.AutoToolTip = False
         Me.tscmdSettings.BackColor = System.Drawing.SystemColors.Control
+        Me.tscmdSettings.CheckOnClick = True
         Me.tscmdSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.tscmdSettings.Image = CType(resources.GetObject("tscmdSettings.Image"), System.Drawing.Image)
         Me.tscmdSettings.ImageTransparentColor = System.Drawing.Color.Magenta
@@ -552,6 +558,7 @@ Partial Class frmMain
         '
         'cmdOpenSourceBackground
         '
+        Me.cmdOpenSourceBackground.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cmdOpenSourceBackground.Location = New System.Drawing.Point(476, 21)
         Me.cmdOpenSourceBackground.Name = "cmdOpenSourceBackground"
         Me.cmdOpenSourceBackground.Size = New System.Drawing.Size(60, 22)
@@ -581,6 +588,7 @@ Partial Class frmMain
         '
         'cmdSavedUserBackground
         '
+        Me.cmdSavedUserBackground.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cmdSavedUserBackground.Location = New System.Drawing.Point(476, 63)
         Me.cmdSavedUserBackground.Name = "cmdSavedUserBackground"
         Me.cmdSavedUserBackground.Size = New System.Drawing.Size(60, 22)
@@ -599,9 +607,11 @@ Partial Class frmMain
         '
         'txtSaveWallpaper
         '
+        Me.txtSaveWallpaper.BackColor = System.Drawing.SystemColors.HighlightText
         Me.txtSaveWallpaper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.txtSaveWallpaper.Location = New System.Drawing.Point(8, 64)
         Me.txtSaveWallpaper.Name = "txtSaveWallpaper"
+        Me.txtSaveWallpaper.ReadOnly = True
         Me.txtSaveWallpaper.Size = New System.Drawing.Size(466, 20)
         Me.txtSaveWallpaper.TabIndex = 0
         '
