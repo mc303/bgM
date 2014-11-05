@@ -15,12 +15,34 @@ Module modMain
     Public _networkinfo As New Dictionary(Of String, String)
 
     Sub Main()
-        Dim _sleep As Integer = _reg.getWait * 1000
-        Thread.Sleep(_sleep)
-        Call createNetworkInformation()
-        Call createPreviewFromBackground()
-        Call Wallpaper.Apply(_reg.getWallpaper)
-        Application.Exit()
+        Console.WriteLine("")
+        Console.WriteLine("  createBG version " + Application.ProductVersion)
+        'Console.WriteLine("")
+        Try
+            If _reg.getWallpaper = "" Then
+                Console.WriteLine("  The wallpaper is not not set. Use bgM to set the wallpaper")
+                Environment.Exit(0)
+            End If
+        Catch ex As Exception
+            Console.WriteLine("  Registry settings not set. Sry exiting application :-\")
+            Environment.Exit(0)
+        End Try
+
+        Try
+            If Not _reg.getWait = 0 Then
+                Dim _sleep As Integer = _reg.getWait * 1000
+                Thread.Sleep(_sleep)
+            End If
+
+            Call createNetworkInformation()
+            Call createPreviewFromBackground()
+            Call Wallpaper.Apply(_reg.getWallpaper)
+            Console.WriteLine("  The background has been changed")
+        Catch ex As Exception
+            Console.WriteLine("  damn somthing went wrong :-\")
+        End Try
+        'Console.ReadKey()
+        Environment.Exit(0)
     End Sub
 
     Sub createPreviewFromBackground()
@@ -32,6 +54,8 @@ Module modMain
         Dim stringFormat As New StringFormat()
         Dim _inputFields As Integer = _reg.getInputFields()
         Dim _wallpaper As String = _reg.getSourceWallpaper
+        Dim _bg As String = _reg.getWallpaper
+
         'Load the Image to be written on.
         Dim bitMapImage As Bitmap = Bitmap.FromFile(_wallpaper)
         'Dim bitMapImage As Bitmap = Image.FromFile(_bg)
@@ -68,13 +92,16 @@ Module modMain
                 End Select
 
                 _envText = ConvertItems.itemToEnviromentVar(_txt)
-
+                Console.WriteLine(String.Format("  adding text to background: {0}", _envText))
                 'TextRenderer.DrawText()
                 graphicImage.DrawString(_envText, _reg.getItemFont(i.ToString("D2")), _color, _screenPos, stringFormat)
             Next
 
             'Save the new image to the response output stream.
-            bitMapImage.Save(_reg.getWallpaper, System.Drawing.Imaging.ImageFormat.Png)
+            bitMapImage.Save(_bg, System.Drawing.Imaging.ImageFormat.Png)
+            If File.Exists(_bg) Then
+                Console.WriteLine(String.Format("  saving background: {0}", _bg))
+            End If
 
             'Clean house.
             graphicImage.Dispose()
@@ -92,7 +119,7 @@ Module modMain
         Dim _i_item As Integer = 0
 
         If nics Is Nothing OrElse nics.Length < 1 Then
-            Debug.Print("  No network interfaces found.")
+            Console.WriteLine("  No network interfaces found.")
             Exit Sub
         End If
         For Each adapter As NetworkInterface In nics
