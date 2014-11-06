@@ -75,6 +75,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="keyValue.vb" />
+    <Compile Include="xmlElement.vb" />
+    <Compile Include="xmlReader.vb" />
+    <Compile Include="xmlWriter.vb" />
+    <Compile Include="xmlRegistry.vb" />
     <Compile Include="ConvertItems.vb" />
     <Compile Include="ResizeImage.vb" />
     <Compile Include="_Convert.vb" />
