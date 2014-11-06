@@ -24,6 +24,7 @@ Partial Class frmPreview
     Private Sub InitializeComponent()
         Me.pbBackground = New System.Windows.Forms.PictureBox()
         Me.lblScreenPos = New System.Windows.Forms.Label()
+        Me.lblVersion = New System.Windows.Forms.Label()
         CType(Me.pbBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,6 +46,18 @@ Partial Class frmPreview
         Me.lblScreenPos.TabIndex = 1
         Me.lblScreenPos.Text = "Label1"
         '
+        'lblVersion
+        '
+        Me.lblVersion.AutoSize = True
+        Me.lblVersion.BackColor = System.Drawing.Color.Transparent
+        Me.lblVersion.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblVersion.Location = New System.Drawing.Point(34, 74)
+        Me.lblVersion.Name = "lblVersion"
+        Me.lblVersion.Size = New System.Drawing.Size(101, 18)
+        Me.lblVersion.TabIndex = 20
+        Me.lblVersion.Text = " beta version:"
+        Me.lblVersion.Visible = False
+        '
         'frmPreview
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -54,9 +67,10 @@ Partial Class frmPreview
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.lblScreenPos)
         Me.Controls.Add(Me.pbBackground)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "frmPreview"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Background Preview"
@@ -69,4 +83,5 @@ Partial Class frmPreview
     End Sub
     Friend WithEvents pbBackground As System.Windows.Forms.PictureBox
     Friend WithEvents lblScreenPos As System.Windows.Forms.Label
+    Friend WithEvents lblVersion As System.Windows.Forms.Label
 End Class

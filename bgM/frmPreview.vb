@@ -5,7 +5,7 @@ Imports System.Drawing.Drawing2D
 Public Class frmPreview
     Public lbl As New Label()
 
-    Const _locCorrect = 23
+    ' Const _locCorrect = 23
 
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
@@ -18,9 +18,6 @@ Public Class frmPreview
 
     Private Sub frmPreview_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim _txt As TextBox = frmMain.txtOpenBackgroundFileName
-        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        'Me.WindowState = FormWindowState.Maximized
-        Me.Dock = DockStyle.Fill
 
         With Me.pbBackground
             .Visible = True
@@ -37,10 +34,27 @@ Public Class frmPreview
             .SendToBack()
         End With
 
+        Me.Top = 0
+        Me.Left = 0
+
+        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
+        'Me.WindowState = FormWindowState.Maximized
+
+        Me.Dock = DockStyle.Fill
         ' ImageAutoSize.Image(_reg.getRegWallpaper, Me.pbBackground)
 
         Call Me.createPreviewFromBackground()
         'Call Me.loadPreviewView()
+
+        With Me.lblVersion
+            .Text = String.Format("beta version:{0}", My.Application.Info.Version)
+            .Top = 15
+            .Left = screenWidth - (.Width + 15)
+            .Visible = True
+            .ForeColor = Color.Black
+            .BackColor = Color.Transparent
+            .Parent = Me.pbBackground
+        End With
        
         _txt = Nothing
     End Sub

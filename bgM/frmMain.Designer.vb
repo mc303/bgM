@@ -88,6 +88,7 @@ Partial Class frmMain
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtSaveWallpaper = New System.Windows.Forms.TextBox()
         Me.lblScreenPos = New System.Windows.Forms.Label()
+        Me.lblVersion = New System.Windows.Forms.Label()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -626,14 +627,29 @@ Partial Class frmMain
         Me.lblScreenPos.Text = "{ X=9999, Y=9999 }"
         Me.lblScreenPos.Visible = False
         '
+        'lblVersion
+        '
+        Me.lblVersion.AutoSize = True
+        Me.lblVersion.BackColor = System.Drawing.Color.Transparent
+        Me.lblVersion.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblVersion.Location = New System.Drawing.Point(12, 34)
+        Me.lblVersion.Name = "lblVersion"
+        Me.lblVersion.Size = New System.Drawing.Size(97, 18)
+        Me.lblVersion.TabIndex = 19
+        Me.lblVersion.Text = "beta version:"
+        Me.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblVersion.Visible = False
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(1094, 520)
         Me.ControlBox = False
+        Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.lblScreenPos)
         Me.Controls.Add(Me.plSettings)
         Me.Controls.Add(Me.Panel1)
@@ -641,7 +657,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.tsMain)
         Me.Controls.Add(Me.plResize)
         Me.DoubleBuffered = True
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmMain"
@@ -727,5 +743,6 @@ Partial Class frmMain
     Friend WithEvents cbCoordinatesMode As System.Windows.Forms.ComboBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents cmdOpenSourceBackground As System.Windows.Forms.Button
+    Friend WithEvents lblVersion As System.Windows.Forms.Label
 
 End Class

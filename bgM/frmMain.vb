@@ -217,6 +217,16 @@ Public Class frmMain
         Me.ColorDialog1.Color = ColorTranslator.FromWin32(_reg.getFontColor)
         Me.tscmdFontColor.BackColor = ColorTranslator.FromWin32(_reg.getFontColor)
 
+        With Me.lblVersion
+            .Text = String.Format("beta version:{0}", My.Application.Info.Version)
+            .Top = 15
+            .Left = screenWidth - (.Width + 15)
+            .Visible = True
+            .ForeColor = Color.Black
+            .BackColor = Color.Transparent
+            .Parent = Me.pbMainBackground
+        End With
+
         Me.Visible = True
     End Sub
 
