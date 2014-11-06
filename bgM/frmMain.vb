@@ -40,8 +40,8 @@ Public Class frmMain
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.Visible = False
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        ' Me.WindowState = FormWindowState.Maximized
-        Me.Dock = DockStyle.Fill
+        Me.WindowState = FormWindowState.Maximized
+
         Dim _image As Bitmap
 
         'check registry
@@ -226,7 +226,7 @@ Public Class frmMain
             .BackColor = Color.Transparent
             .Parent = Me.pbMainBackground
         End With
-
+        Debug.Print(String.Format("main {0} {1}", Me.lblVersion.Location, Me.Size))
         Me.Visible = True
     End Sub
 

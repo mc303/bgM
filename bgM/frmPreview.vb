@@ -10,41 +10,14 @@ Public Class frmPreview
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
 
-    Private Sub frmPreview_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-        If e.KeyCode = Keys.Escape Then
-            Me.Close()
-        End If
-    End Sub
-
-    Private Sub frmPreview_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmPreview_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
         Dim _txt As TextBox = frmMain.txtOpenBackgroundFileName
+   
 
-        With Me.pbBackground
-            .Visible = True
-            .Dock = DockStyle.Fill
-            '.Top = 8
-            '.Left = 8
-            '.Width = screenWidth
-            '.Height = screenHeight
-            .BackColor = Color.Red
-            '.BackgroundImage = Bitmap.FromFile(_txt.Text)
-            .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)
-
-            '.BackgroundImageLayout = ImageLayout.Stretch
-            .SendToBack()
-        End With
-
-        Me.Top = 0
-        Me.Left = 0
-
-        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        'Me.WindowState = FormWindowState.Maximized
-
-        Me.Dock = DockStyle.Fill
-        ' ImageAutoSize.Image(_reg.getRegWallpaper, Me.pbBackground)
-
-        Call Me.createPreviewFromBackground()
-        'Call Me.loadPreviewView()
+        'Me.Top =
+        'Me.Left = 0
+        'Me.Width = screenWidth
+        'Me.Height = screenHeight
 
         With Me.lblVersion
             .Text = String.Format("_bgM beta version:{0}", My.Application.Info.Version)
@@ -54,9 +27,45 @@ Public Class frmPreview
             .ForeColor = Color.Black
             .BackColor = Color.Transparent
             .Parent = Me.pbBackground
+            .BringToFront()
         End With
-       
+
+        With Me.pbBackground
+            .Visible = True
+            .Dock = DockStyle.Fill
+            '.Top = 0
+            '.Left = 0
+            '.Width = screenWidth
+            '.Height = screenHeight
+            .BackColor = Color.Red
+            '.BackgroundImage = Bitmap.FromFile(_txt.Text)
+            .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)
+            '.BackgroundImageLayout = ImageLayout.Stretch
+            .SendToBack()
+        End With
+        Debug.Print(String.Format("1 {0} {1}", Me.lblVersion.Location, Me.Size))
+        Call Me.createPreviewFromBackground()
+        'Call Me.loadPreviewView()
+
+
+        Debug.Print(String.Format("2 {0} {1}", Me.lblVersion.Location, Me.Size))
         _txt = Nothing
+    End Sub
+
+    Private Sub frmPreview_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+        If e.KeyCode = Keys.Escape Then
+            Me.Close()
+        End If
+    End Sub
+
+    Private Sub frmPreview_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.WindowState = FormWindowState.Maximized
+        With Me.lblVersion
+            .Top = 15
+            .Left = screenWidth - (.Width + 15)
+            .Visible = True
+            .BringToFront()
+        End With
     End Sub
 
     Sub createPreviewFromBackground()
