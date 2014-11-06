@@ -47,7 +47,7 @@ Public Class frmPreview
         'Call Me.loadPreviewView()
 
         With Me.lblVersion
-            .Text = String.Format("beta version:{0}", My.Application.Info.Version)
+            .Text = String.Format("_bgM beta version:{0}", My.Application.Info.Version)
             .Top = 15
             .Left = screenWidth - (.Width + 15)
             .Visible = True
