@@ -55,7 +55,7 @@ Public Class frmPreview
             .BackColor = Color.Transparent
             .Parent = Me.pbBackground
         End With
-       
+
         _txt = Nothing
     End Sub
 
