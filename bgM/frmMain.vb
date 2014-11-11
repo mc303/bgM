@@ -24,26 +24,26 @@ Public Class frmMain
     Private _pClickStop As New Point '-- The place where the mouse button went 'up'.
     Private _pNow As New Point
 
-    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        ' Call Me.saveComboboxToReg()
-    End Sub
-
     Private Sub frmMain_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         Select Case e.KeyCode
             Case Keys.F5
-                Call frmPreview.Show()
+                Call showPreview()
             Case Keys.Escape
-                Call Me.saveMessageBeforeExit()
+                If Me.pbBackground.Visible Then
+
+                    Me.pbBackground.Visible = False
+                    Me.lblLiveScreenPos.Visible = False
+                Else
+                    Call Me.saveMessageBeforeExit()
+                End If
+
         End Select
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.Visible = False
-        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        ' Me.WindowState = FormWindowState.Maximized
-        Me.Dock = DockStyle.Fill
         Dim _image As Bitmap
-
+   
         'check registry
         Call _reg.createRootKey()
         Call createNetworkInformation()
@@ -54,12 +54,6 @@ Public Class frmMain
 
         With Me.Panel1
             .Visible = False
-        End With
-
-        With Me.lblScreenPos
-            .Top = screenHeight - 38
-            .Left = screenWidth - 140
-            .Visible = True
         End With
 
         With Me.tsMain
@@ -101,6 +95,7 @@ Public Class frmMain
         Else
             _image = ResizeImage.Image(_reg.getSourceWallpaper, New Size(screenWidth, screenHeight), False)
         End If
+        Me.pbBackground.Visible = False
 
         With Me.pbMainBackground
             .Dock = DockStyle.Fill
@@ -212,10 +207,22 @@ Public Class frmMain
                 Me.tscmdFontUnderline.Checked = True
         End Select
 
-
         Me.FontDialog1.Font = _font
         Me.ColorDialog1.Color = ColorTranslator.FromWin32(_reg.getFontColor)
         Me.tscmdFontColor.BackColor = ColorTranslator.FromWin32(_reg.getFontColor)
+
+        With Me.lblScreenPos
+            .Top = screenHeight - 38
+            .Left = screenWidth - 140
+            .Visible = True
+        End With
+
+        With Me.lblLiveScreenPos
+            .Visible = False
+            .Top = 24
+            .Left = 25
+            .Text = "{X=0, Y=0}"
+        End With
 
         With Me.lblVersion
             .Text = String.Format("_bgM beta version:{0}", My.Application.Info.Version)
@@ -447,6 +454,30 @@ Public Class frmMain
         End If
     End Sub
 
+    Sub showPreview()
+        Dim _txt As TextBox = txtOpenBackgroundFileName
+        'Call frmPreview.Show()
+        Me.pbMainBackground.SendToBack()
+
+        With Me.pbBackground
+            .Visible = False
+            .Dock = DockStyle.Fill
+            .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)
+            .BringToFront()
+        End With
+
+
+
+        Me.lblLiveScreenPos.Visible = True
+        Me.lblLiveScreenPos.BringToFront()
+        Call createPreviewFromBackground()
+        Me.pbBackground.Visible = True
+        Me.lblVersion.BringToFront()
+        Me.lblVersion.Parent = pbBackground
+
+        _txt = Nothing
+    End Sub
+
     Private Sub btnDelete(sender As Object, e As EventArgs)
         Dim _txt As TextBox = DirectCast(sender, TextBox)
         ''Me.Controls.Remove(_txt)
@@ -637,7 +668,7 @@ Public Class frmMain
         If _txt.Text = "" Then
             MsgBox("The background is configured with a solid color. It is not possible to load the default background. First you have to create or open a background", MsgBoxStyle.OkOnly, "Error")
         Else
-            Call frmPreview.Show()
+            showPreview()
         End If
 
         _txt = Nothing
@@ -903,5 +934,15 @@ Public Class frmMain
         'plResize.Visible = False
         '_txt = Nothing
         'Me.nudResize.Tag = Nothing
+    End Sub
+
+    Private Sub pbBackground_MouseMove(sender As Object, e As MouseEventArgs) Handles pbBackground.MouseMove
+        Dim screenPos As Point = MousePosition()
+        lblLiveScreenPos.Text = screenPos.ToString
+    End Sub
+
+    Private Sub lblLiveScreenPos_MouseMove(sender As Object, e As MouseEventArgs) Handles lblLiveScreenPos.MouseMove
+        Dim screenPos As Point = MousePosition()
+        lblLiveScreenPos.Text = screenPos.ToString
     End Sub
 End Class

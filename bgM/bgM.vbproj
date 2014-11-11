@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConvertItems.vb" />
+    <Compile Include="mainMod.vb" />
     <Compile Include="ResizeImage.vb" />
     <Compile Include="_Convert.vb" />
     <Compile Include="DragInfo.vb" />
@@ -86,13 +87,6 @@
       <DependentUpon>frmMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmPreview.Designer.vb">
-      <DependentUpon>frmPreview.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmPreview.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="mainMod.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -114,9 +108,6 @@
   <ItemGroup>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmPreview.resx">
-      <DependentUpon>frmPreview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

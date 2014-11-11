@@ -89,6 +89,8 @@ Partial Class frmMain
         Me.txtSaveWallpaper = New System.Windows.Forms.TextBox()
         Me.lblScreenPos = New System.Windows.Forms.Label()
         Me.lblVersion = New System.Windows.Forms.Label()
+        Me.pbBackground = New System.Windows.Forms.PictureBox()
+        Me.lblLiveScreenPos = New System.Windows.Forms.Label()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,6 +98,7 @@ Partial Class frmMain
         CType(Me.pbMainBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.plSettings.SuspendLayout()
+        CType(Me.pbBackground, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbItems
@@ -640,6 +643,25 @@ Partial Class frmMain
         Me.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.lblVersion.Visible = False
         '
+        'pbBackground
+        '
+        Me.pbBackground.Location = New System.Drawing.Point(432, 332)
+        Me.pbBackground.Name = "pbBackground"
+        Me.pbBackground.Size = New System.Drawing.Size(413, 166)
+        Me.pbBackground.TabIndex = 20
+        Me.pbBackground.TabStop = False
+        Me.pbBackground.Visible = False
+        '
+        'lblLiveScreenPos
+        '
+        Me.lblLiveScreenPos.AutoSize = True
+        Me.lblLiveScreenPos.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblLiveScreenPos.Location = New System.Drawing.Point(632, 444)
+        Me.lblLiveScreenPos.Name = "lblLiveScreenPos"
+        Me.lblLiveScreenPos.Size = New System.Drawing.Size(56, 18)
+        Me.lblLiveScreenPos.TabIndex = 23
+        Me.lblLiveScreenPos.Text = "Label5"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -648,7 +670,8 @@ Partial Class frmMain
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(1094, 520)
-        Me.ControlBox = False
+        Me.Controls.Add(Me.lblLiveScreenPos)
+        Me.Controls.Add(Me.pbBackground)
         Me.Controls.Add(Me.lblVersion)
         Me.Controls.Add(Me.lblScreenPos)
         Me.Controls.Add(Me.plSettings)
@@ -656,10 +679,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.pbMainBackground)
         Me.Controls.Add(Me.tsMain)
         Me.Controls.Add(Me.plResize)
-        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "frmMain"
         Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -675,6 +695,7 @@ Partial Class frmMain
         Me.Panel1.PerformLayout()
         Me.plSettings.ResumeLayout(False)
         Me.plSettings.PerformLayout()
+        CType(Me.pbBackground, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -744,5 +765,7 @@ Partial Class frmMain
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents cmdOpenSourceBackground As System.Windows.Forms.Button
     Friend WithEvents lblVersion As System.Windows.Forms.Label
+    Friend WithEvents pbBackground As System.Windows.Forms.PictureBox
+    Friend WithEvents lblLiveScreenPos As System.Windows.Forms.Label
 
 End Class

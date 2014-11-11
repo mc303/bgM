@@ -10,6 +10,14 @@ Public Class frmPreview
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
 
+    Private Sub frmPreview_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Me.Dispose()
+    End Sub
+
+    Private Sub frmPreview_HandleCreated(sender As Object, e As EventArgs) Handles Me.HandleCreated
+
+    End Sub
+
     Private Sub frmPreview_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If e.KeyCode = Keys.Escape Then
             Me.Close()
@@ -37,12 +45,6 @@ Public Class frmPreview
         Me.Top = 0
         Me.Left = 0
 
-        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.None
-        'Me.WindowState = FormWindowState.Maximized
-
-        Me.Dock = DockStyle.Fill
-        ' ImageAutoSize.Image(_reg.getRegWallpaper, Me.pbBackground)
-
         Call Me.createPreviewFromBackground()
         'Call Me.loadPreviewView()
 
@@ -57,6 +59,7 @@ Public Class frmPreview
         End With
 
         _txt = Nothing
+
     End Sub
 
     Sub createPreviewFromBackground()
