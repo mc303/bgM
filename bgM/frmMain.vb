@@ -28,11 +28,14 @@ Public Class frmMain
         Select Case e.KeyCode
             Case Keys.F5
                 Call showPreview()
+
+
             Case Keys.Escape
                 If Me.pbBackground.Visible Then
 
                     Me.pbBackground.Visible = False
                     Me.lblLiveScreenPos.Visible = False
+                    Me.tsMain.Visible = True
                 Else
                     Call Me.saveMessageBeforeExit()
                 End If
@@ -456,6 +459,7 @@ Public Class frmMain
 
     Sub showPreview()
         Dim _txt As TextBox = txtOpenBackgroundFileName
+        Me.tsMain.Visible = False
         'Call frmPreview.Show()
         Me.pbMainBackground.SendToBack()
 
@@ -468,13 +472,13 @@ Public Class frmMain
 
 
 
-        Me.lblLiveScreenPos.Visible = True
+
         Me.lblLiveScreenPos.BringToFront()
         Call createPreviewFromBackground()
         Me.pbBackground.Visible = True
         Me.lblVersion.BringToFront()
         Me.lblVersion.Parent = pbBackground
-
+        Me.lblLiveScreenPos.Visible = True
         _txt = Nothing
     End Sub
 
@@ -942,6 +946,11 @@ Public Class frmMain
     End Sub
 
     Private Sub lblLiveScreenPos_MouseMove(sender As Object, e As MouseEventArgs) Handles lblLiveScreenPos.MouseMove
+        Dim screenPos As Point = MousePosition()
+        lblLiveScreenPos.Text = screenPos.ToString
+    End Sub
+
+    Private Sub lblVersion_MouseMove(sender As Object, e As MouseEventArgs) Handles lblVersion.MouseMove
         Dim screenPos As Point = MousePosition()
         lblLiveScreenPos.Text = screenPos.ToString
     End Sub
