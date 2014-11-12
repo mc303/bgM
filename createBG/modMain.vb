@@ -7,11 +7,12 @@ Imports System.Net
 Imports System.Net.NetworkInformation
 
 Module modMain
-    Const _offsetX = 8
-    Const _offsetY = 13
+    Const _offsetX = 2
+    Const _offsetY = 2
 
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
+
     Public _networkinfo As New Dictionary(Of String, String)
 
     Sub Main()

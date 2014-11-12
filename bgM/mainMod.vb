@@ -146,7 +146,7 @@ Module mainMod
         For Each _item As String In frmMain.lbItems.Items
             _txt = CType(frmMain.Controls(_item), TextBox)
             '_screenPos = _txt.PointToScreen(New Point(-21, -10))
-            _screenPos = _txt.PointToScreen(New Point(5, 3))
+            _screenPos = _txt.PointToScreen(New Point(2, 2))
             '_screenPos = _txt.PointToScreen(New Point(8, 13))
             '_screenPos = _txt.Location
             _color = New SolidBrush(_txt.ForeColor)
