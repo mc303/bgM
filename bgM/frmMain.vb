@@ -34,8 +34,10 @@ Public Class frmMain
                 If Me.pbBackground.Visible Then
 
                     Me.pbBackground.Visible = False
-                    Me.lblLiveScreenPos.Visible = False
+                    Me.lblLiveScreenPos.Visible = True
                     Me.tsMain.Visible = True
+                    Me.lblVersion.Parent = Me.pbMainBackground
+                    Me.lblVersion.BringToFront()
                 Else
                     Call Me.saveMessageBeforeExit()
                 End If
@@ -469,9 +471,6 @@ Public Class frmMain
             .BackgroundImage = ResizeImage.Image(_txt.Text, New Size(screenWidth, screenHeight), False)
             .BringToFront()
         End With
-
-
-
 
         Me.lblLiveScreenPos.BringToFront()
         Call createPreviewFromBackground()
