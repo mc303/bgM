@@ -34,7 +34,7 @@ Public Class frmMain
                 If Me.pbBackground.Visible Then
 
                     Me.pbBackground.Visible = False
-                    Me.lblLiveScreenPos.Visible = True
+                    Me.lblLiveScreenPos.Visible = False
                     Me.tsMain.Visible = True
                     Me.lblVersion.Parent = Me.pbMainBackground
                     Me.lblVersion.BringToFront()
