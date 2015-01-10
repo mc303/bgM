@@ -7,13 +7,14 @@ Public Class frmMain
     Dim _i As Integer = 0
     Dim _l As Integer = 0
     Dim _nameN As Integer = 0
+    Dim _pixN As Integer = 0
+
     Public _keyValue As Keys
     ' Dim cmb As New ComboBox()
     Dim txt As New TextBox()
+    Dim _pix As New PictureBox()
 
     Public _notSaved As Boolean = False
-    ' Public _
-
     Public Const _locCorrect = 0
 
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
@@ -23,6 +24,11 @@ Public Class frmMain
     Private _pClickStart As New Point '-- The place where the mouse button went 'down'.
     Private _pClickStop As New Point '-- The place where the mouse button went 'up'.
     Private _pNow As New Point
+
+    Private Sub frmMain_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        _keyValue = e.KeyCode
+        e.Handled = False
+    End Sub
 
     Private Sub frmMain_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         Select Case e.KeyCode
@@ -43,6 +49,8 @@ Public Class frmMain
                 End If
 
         End Select
+        _keyValue = Nothing
+        e.Handled = False
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -254,6 +262,7 @@ Public Class frmMain
 
     Public Sub addItemToForm(ByVal _txtText As String)
         txt = New TextBox
+
         Dim _font As Font
 
         ' AddHandler cmb.Click, AddressOf btnDelete
@@ -261,7 +270,7 @@ Public Class frmMain
         AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
         AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
         AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
-        AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
+        'AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
         AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
 
         _font = New Font(tscbFontFamilies.Text, Convert.ToSingle(tscbFontSize.Text), getFontStyle)
@@ -284,6 +293,32 @@ Public Class frmMain
         _font = Nothing
     End Sub
 
+    Public Sub addPicBoxToForm(ByVal _pixfile As String)
+        _pix = New PictureBox
+
+        AddHandler _pix.MouseDown, AddressOf Me._pix_MouseDown
+        AddHandler _pix.MouseMove, AddressOf Me._pix_MouseMove
+        AddHandler _pix.MouseUp, AddressOf Me._pix_MouseUp
+        AddHandler _pix.MouseHover, AddressOf Me._pix_MouseHover
+
+        With Me._pix
+            .Location = New Point((screenWidth / 2), (screenHeight / 2))
+            .BorderStyle = BorderStyle.FixedSingle
+            .Image = Bitmap.FromFile(_pixfile)
+            .SizeMode = PictureBoxSizeMode.AutoSize
+            .Name = "PictureBox" & _pixN
+            .ContextMenuStrip = cmsPictureBox
+            .Visible = True
+            .BackColor = Color.Transparent
+            .Parent = pbMainBackground
+        End With
+
+        Me.Controls.Add(_pix)
+        Me._pix.BringToFront()
+        Me.lbPictureBox.Items.Add("PictureBox" & _pixN)
+        _pixN = _pixN + 1
+    End Sub
+
 
     Private Sub loadItemsFromRegistryAddToForm()
         Dim _inputFields As Integer = _reg.getInputFields()
@@ -301,7 +336,7 @@ Public Class frmMain
                 AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
                 AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
                 AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
-                AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
+                'AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
                 AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
 
                 With txt
@@ -551,13 +586,53 @@ Public Class frmMain
         _screenPos = Nothing
     End Sub
 
-
-    Private Sub txt_KeyUp(sender As Object, e As KeyEventArgs)
-        _keyValue = Nothing
-    End Sub
-
     Private Sub txt_GotFocus(sender As Object, e As EventArgs)
         Dim _controlMove As TextBox = DirectCast(sender, TextBox)
+        Dim _screenPos As Point = _controlMove.PointToScreen(New Point(0, 0))
+        'txtBox3.Text = _screenPos.ToString
+        'txtBox1.Text = _controlMove.Location.ToString
+        lblScreenPos.Text = _screenPos.ToString
+        _controlMove = Nothing
+        _screenPos = Nothing
+    End Sub
+
+    Private Sub _pix_MouseDown(sender As Object, e As MouseEventArgs)
+        Dim _controlMove As PictureBox = DirectCast(sender, PictureBox)
+        _controlMove.BringToFront()
+        _controlMove.Tag = New DragInfo(Form.MousePosition, _controlMove.Location)
+        _controlMove = Nothing
+    End Sub
+
+    Private Sub _pix_MouseMove(sender As Object, e As MouseEventArgs)
+        Dim _controlMove As PictureBox = DirectCast(sender, PictureBox)
+
+        If _controlMove.Tag IsNot Nothing AndAlso e.Button = Windows.Forms.MouseButtons.Left AndAlso _keyValue = Keys.ControlKey Then
+            Dim info As DragInfo = CType(_controlMove.Tag, DragInfo)
+            Dim newLoc As Point = info.NewLocation(Form.MousePosition)
+
+            If Me.ClientRectangle.Contains(New Rectangle(newLoc, _controlMove.Size)) Then
+                _controlMove.Location = newLoc
+                'txtBox1.Text = newLoc.ToString
+                Dim _screenPos As Point = _controlMove.PointToScreen(New Point(0, 0))
+                'txtBox3.Text = ScreenPos.ToString
+
+                If Not lblScreenPos.Text = _screenPos.ToString Then
+                    lblScreenPos.Text = _screenPos.ToString
+                    _notSaved = True
+                End If
+            End If
+        End If
+        '_controlMove = Nothing
+    End Sub
+
+    Private Sub _pix_MouseUp(sender As Object, e As MouseEventArgs)
+        Dim _controlMove As PictureBox = DirectCast(sender, PictureBox)
+        _controlMove.Tag = Nothing
+        _controlMove = Nothing
+    End Sub
+
+    Private Sub _pix_MouseHover(sender As Object, e As EventArgs)
+        Dim _controlMove As PictureBox = DirectCast(sender, PictureBox)
         Dim _screenPos As Point = _controlMove.PointToScreen(New Point(0, 0))
         'txtBox3.Text = _screenPos.ToString
         'txtBox1.Text = _controlMove.Location.ToString
@@ -575,6 +650,7 @@ Public Class frmMain
         For Each _item As String In lbItems.Items
             If _item = _cms.SourceControl.Name Then
                 lbItems.Items.Remove(_item)
+                _notSaved = True
                 Exit For
             End If
         Next
@@ -875,7 +951,7 @@ Public Class frmMain
                 .Visible = True
             End With
         End If
-        
+
     End Sub
 
     Private Sub cmdSavedUserBackground_Click(sender As Object, e As EventArgs) Handles cmdSavedUserBackground.Click
@@ -933,7 +1009,7 @@ Public Class frmMain
         End If
 
         '_txt.Width = Integer.Parse(nudResize.Text)
-        
+
         'plResize.Visible = False
         '_txt = Nothing
         'Me.nudResize.Tag = Nothing
@@ -952,5 +1028,36 @@ Public Class frmMain
     Private Sub lblVersion_MouseMove(sender As Object, e As MouseEventArgs) Handles lblVersion.MouseMove
         Dim screenPos As Point = MousePosition()
         lblLiveScreenPos.Text = screenPos.ToString
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim _pixfile As String = ""
+        With Me.ofdOpenBackground
+            .Filter = "PNG Files|*.png|JPEG Files|*.jpg"
+            .DefaultExt = "png"
+        End With
+
+        If (ofdOpenBackground.ShowDialog() = DialogResult.OK) Then
+            'Call _reg.setRegWallpaper(ofdOpenBG.FileName)
+            _pixfile = ofdOpenBackground.FileName
+            Call addPicBoxToForm(_pixfile)
+        End If
+    End Sub
+
+
+    Private Sub cmsPictureBox_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles cmsPictureBox.Opening
+        Dim _cms As ContextMenuStrip = CType(sender, ContextMenuStrip)
+        Dim _pix As PictureBox = _cms.SourceControl
+        cmsPBtsNameThing.Text = _pix.Name
+    
+        _cms = Nothing
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub pbBackground_Click(sender As Object, e As EventArgs) Handles pbBackground.Click
+
     End Sub
 End Class

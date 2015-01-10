@@ -331,4 +331,7 @@
   <metadata name="sfdSaveColorBackground.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>786, 13</value>
   </metadata>
+  <metadata name="cmsPictureBox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>974, 13</value>
+  </metadata>
 </root>
