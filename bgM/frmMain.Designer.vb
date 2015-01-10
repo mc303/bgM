@@ -92,13 +92,14 @@ Partial Class frmMain
         Me.lblVersion = New System.Windows.Forms.Label()
         Me.pbBackground = New System.Windows.Forms.PictureBox()
         Me.lblLiveScreenPos = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.cmsPictureBox = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.cmsPBtsNameThing = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmsPBtsRemove = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmsPBtsRotate90 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tscmdAddPicture = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -250,7 +251,7 @@ Partial Class frmMain
         Me.tsMain.Dock = System.Windows.Forms.DockStyle.None
         Me.tsMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
         Me.tsMain.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.tsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscmdShow, Me.tslblBackground, Me.tscmdOpenBG, Me.ToolStripSeparator4, Me.tsMenu, Me.tscbFontFamilies, Me.tscbFontSize, Me.tscmdFontBold, Me.tscmdFontItalic, Me.tscmdFontUnderline, Me.tscmdFontColor, Me.ToolStripSeparator3, Me.tscmdAddItem, Me.tscbListItems, Me.tscmdHide, Me.tscmdClose, Me.tscmdPreviewBG, Me.tscmdSaveItems, Me.ToolStripSeparator2, Me.ToolStripButton1, Me.tscmdSettings})
+        Me.tsMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tscmdShow, Me.tslblBackground, Me.tscmdOpenBG, Me.ToolStripSeparator4, Me.tsMenu, Me.tscbFontFamilies, Me.tscbFontSize, Me.tscmdFontBold, Me.tscmdFontItalic, Me.tscmdFontUnderline, Me.tscmdFontColor, Me.ToolStripSeparator3, Me.tscmdAddItem, Me.tscbListItems, Me.tscmdHide, Me.tscmdClose, Me.tscmdAddPicture, Me.ToolStripSeparator9, Me.tscmdPreviewBG, Me.tscmdSaveItems, Me.ToolStripSeparator2, Me.ToolStripButton1, Me.tscmdSettings})
         Me.tsMain.Location = New System.Drawing.Point(0, 0)
         Me.tsMain.Name = "tsMain"
         Me.tsMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
@@ -680,15 +681,6 @@ Partial Class frmMain
         Me.lblLiveScreenPos.TabIndex = 23
         Me.lblLiveScreenPos.Text = "Label5"
         '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(239, 92)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(117, 38)
-        Me.Button1.TabIndex = 24
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'cmsPictureBox
         '
         Me.cmsPictureBox.DropShadowEnabled = False
@@ -727,6 +719,20 @@ Partial Class frmMain
         Me.cmsPBtsRotate90.Size = New System.Drawing.Size(137, 22)
         Me.cmsPBtsRotate90.Text = "Rotate 90"
         '
+        'tscmdAddPicture
+        '
+        Me.tscmdAddPicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tscmdAddPicture.Image = CType(resources.GetObject("tscmdAddPicture.Image"), System.Drawing.Image)
+        Me.tscmdAddPicture.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tscmdAddPicture.Name = "tscmdAddPicture"
+        Me.tscmdAddPicture.Size = New System.Drawing.Size(73, 22)
+        Me.tscmdAddPicture.Text = "Add Picture"
+        '
+        'ToolStripSeparator9
+        '
+        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -735,7 +741,6 @@ Partial Class frmMain
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.ClientSize = New System.Drawing.Size(1094, 520)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.lblLiveScreenPos)
         Me.Controls.Add(Me.pbBackground)
         Me.Controls.Add(Me.lblVersion)
@@ -834,7 +839,6 @@ Partial Class frmMain
     Friend WithEvents lblVersion As System.Windows.Forms.Label
     Friend WithEvents pbBackground As System.Windows.Forms.PictureBox
     Friend WithEvents lblLiveScreenPos As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents lbPictureBox As System.Windows.Forms.ListBox
     Friend WithEvents cmsPictureBox As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents cmsPBtsNameThing As System.Windows.Forms.ToolStripMenuItem
@@ -842,5 +846,7 @@ Partial Class frmMain
     Friend WithEvents cmsPBtsRemove As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents cmsPBtsRotate90 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tscmdAddPicture As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
 
 End Class

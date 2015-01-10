@@ -123,13 +123,13 @@ Module mainMod
     Sub createPreviewFromBackground()
         Dim _pb As PictureBox = frmMain.pbBackground
         Dim _txt As TextBox
+        Dim _pix As PictureBox
         Dim i As Integer = 0
         Dim _screenPos As Point
         Dim _imgToMemoryStream As New MemoryStream()
         Dim _color As Brush
         Dim _envText As String
         Dim stringFormat As New StringFormat()
-
 
         'Load the Image to be written on.
         Dim bitMapImage As Bitmap = _pb.BackgroundImage
@@ -142,34 +142,44 @@ Module mainMod
         graphicImage.TextRenderingHint = Drawing.Text.TextRenderingHint.ClearTypeGridFit
         graphicImage.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
 
-
         For Each _item As String In frmMain.lbItems.Items
-            _txt = CType(frmMain.Controls(_item), TextBox)
-            '_screenPos = _txt.PointToScreen(New Point(-21, -10))
-            _screenPos = _txt.PointToScreen(New Point(2, 2))
-            '_screenPos = _txt.PointToScreen(New Point(8, 13))
-            '_screenPos = _txt.Location
-            _color = New SolidBrush(_txt.ForeColor)
-            'Write your text.
-            Select Case _txt.TextAlign
-                Case 0 'Left
-                    stringFormat.Alignment = StringAlignment.Near
-                    ' stringFormat.LineAlignment = StringAlignment.Near
-                Case 1 'Right
-                    stringFormat.Alignment = StringAlignment.Far
-                    ' stringFormat.LineAlignment = StringAlignment.Far
-                    _screenPos = New Point(_screenPos.X + _txt.Width, _screenPos.Y)
-                Case 2 'Center
-                    stringFormat.Alignment = StringAlignment.Center
-                    'stringFormat.LineAlignment = StringAlignment.Center
-                    _screenPos = New Point(_screenPos.X + (_txt.Width / 2), _screenPos.Y)
-            End Select
-            'TextRenderer.DrawText(graphicImage, _txt.Text, _txt.Font, New Point(ScreenPos), _txt.ForeColor, Color.Transparent, TextFormatFlags.HorizontalCenter)
-            _envText = ConvertItems.itemToEnviromentVar(_txt.Text)
-            'TextRenderer.DrawText()
-            graphicImage.DrawString(_envText, _txt.Font, _color, _screenPos, stringFormat)
-
+            If _item.Contains("TextBox") Then
+                _txt = CType(frmMain.Controls(_item), TextBox)
+                '_screenPos = _txt.PointToScreen(New Point(-21, -10))
+                _screenPos = _txt.PointToScreen(New Point(2, 2))
+                '_screenPos = _txt.PointToScreen(New Point(8, 13))
+                '_screenPos = _txt.Location
+                _color = New SolidBrush(_txt.ForeColor)
+                'Write your text.
+                Select Case _txt.TextAlign
+                    Case 0 'Left
+                        stringFormat.Alignment = StringAlignment.Near
+                        ' stringFormat.LineAlignment = StringAlignment.Near
+                    Case 1 'Right
+                        stringFormat.Alignment = StringAlignment.Far
+                        ' stringFormat.LineAlignment = StringAlignment.Far
+                        _screenPos = New Point(_screenPos.X + _txt.Width, _screenPos.Y)
+                    Case 2 'Center
+                        stringFormat.Alignment = StringAlignment.Center
+                        'stringFormat.LineAlignment = StringAlignment.Center
+                        _screenPos = New Point(_screenPos.X + (_txt.Width / 2), _screenPos.Y)
+                End Select
+                'TextRenderer.DrawText(graphicImage, _txt.Text, _txt.Font, New Point(ScreenPos), _txt.ForeColor, Color.Transparent, TextFormatFlags.HorizontalCenter)
+                _envText = ConvertItems.itemToEnviromentVar(_txt.Text)
+                'TextRenderer.DrawText()
+                graphicImage.DrawString(_envText, _txt.Font, _color, _screenPos, stringFormat)
+            ElseIf _item.Contains("PictureBox") Then
+                _pix = CType(frmMain.Controls(_item), PictureBox)
+                _screenPos = _pix.PointToScreen(New Point(2, 2))
+                graphicImage.DrawImage(_pix.Image, _screenPos)
+            End If
         Next
+
+        'For Each _pixbox As String In frmMain.lbPictureBox.Items
+        '    _pix = CType(frmMain.Controls(_pixbox), PictureBox)
+        '    _screenPos = _pix.PointToScreen(New Point(2, 2))
+        '    graphicImage.DrawImage(_pix.Image, _screenPos)
+        'Next
 
         'I am drawing a oval around my text.
         ' graphicImage.DrawArc(New Pen(Color.Red, 3), 90, 235, 150, 50, 0, 360)

@@ -16,6 +16,7 @@ Public Class frmMain
 
     Public _notSaved As Boolean = False
     Public Const _locCorrect = 0
+    Public _PixBoxFileName As New Dictionary(Of String, String)
 
     Public screenWidth As Integer = Screen.PrimaryScreen.Bounds.Width
     Public screenHeight As Integer = Screen.PrimaryScreen.Bounds.Height
@@ -270,7 +271,7 @@ Public Class frmMain
         AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
         AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
         AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
-        'AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
+        AddHandler txt.MouseHover, AddressOf Me.txt_MouseHover
         AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
 
         _font = New Font(tscbFontFamilies.Text, Convert.ToSingle(tscbFontSize.Text), getFontStyle)
@@ -316,6 +317,8 @@ Public Class frmMain
         Me.Controls.Add(_pix)
         Me._pix.BringToFront()
         Me.lbPictureBox.Items.Add("PictureBox" & _pixN)
+        Me._PixBoxFileName.Add("PictureBox" & _pixN, _pixfile)
+        Me.lbItems.Items.Add("PictureBox" & _pixN)
         _pixN = _pixN + 1
     End Sub
 
@@ -330,31 +333,58 @@ Public Class frmMain
 
         If Not _inputFields = 0 Then
             For i As Integer = 0 To _inputFields - 1
-                txt = New TextBox
+                If (_reg.getItemObject(i.ToString("D2")).ToString).Contains("TextBox") Then
+                    txt = New TextBox
 
-                AddHandler txt.MouseDown, AddressOf Me.txt_MouseDown
-                AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
-                AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
-                AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
-                'AddHandler txt.KeyUp, AddressOf Me.txt_KeyUp
-                AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
+                    AddHandler txt.MouseDown, AddressOf Me.txt_MouseDown
+                    AddHandler txt.MouseMove, AddressOf Me.txt_MouseMove
+                    AddHandler txt.MouseUp, AddressOf Me.txt_MouseUp
+                    AddHandler txt.KeyDown, AddressOf Me.txt_KeyDown
+                    AddHandler txt.MouseHover, AddressOf Me.txt_MouseHover
+                    AddHandler txt.GotFocus, AddressOf Me.txt_GotFocus
 
-                With txt
-                    .Text = _reg.getItemText(i.ToString("D2"))
-                    .Name = "TextBox" & _nameN
-                    .ContextMenuStrip = cmsItems
-                    .ForeColor = ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2")))
-                    .Size() = New System.Drawing.Size(_reg.getItemWidth(i.ToString("D2")), 21)
-                    .Font = _reg.getItemFont(i.ToString("D2"))
-                    .TextAlign = _reg.getItemAlign(i.ToString("D2"))
-                    '.Location = Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
-                    .Location = getItemPosition(i)
-                    .BorderStyle = BorderStyle.FixedSingle
-                End With
-                Me.Controls.Add(txt)
-                Me.txt.BringToFront()
-                Me.lbItems.Items.Add("TextBox" & _nameN)
-                _nameN = _nameN + 1
+                    With txt
+                        .Text = _reg.getItemText(i.ToString("D2"))
+                        .Name = "TextBox" & _nameN
+                        .ContextMenuStrip = cmsItems
+                        .ForeColor = ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2")))
+                        .Size() = New System.Drawing.Size(_reg.getItemWidth(i.ToString("D2")), 21)
+                        .Font = _reg.getItemFont(i.ToString("D2"))
+                        .TextAlign = _reg.getItemAlign(i.ToString("D2"))
+                        '.Location = Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
+                        .Location = getItemPosition(i)
+                        .BorderStyle = BorderStyle.FixedSingle
+                    End With
+                    Me.Controls.Add(txt)
+                    Me.txt.BringToFront()
+                    Me.lbItems.Items.Add("TextBox" & _nameN)
+                    _nameN = _nameN + 1
+
+                ElseIf (_reg.getItemObject(i.ToString("D2")).ToString).Contains("PictureBox") Then
+                    _pix = New PictureBox
+
+                    AddHandler _pix.MouseDown, AddressOf Me._pix_MouseDown
+                    AddHandler _pix.MouseMove, AddressOf Me._pix_MouseMove
+                    AddHandler _pix.MouseUp, AddressOf Me._pix_MouseUp
+                    AddHandler _pix.MouseHover, AddressOf Me._pix_MouseHover
+
+                    With Me._pix
+                        .Location = getItemPosition(i)
+                        .BorderStyle = BorderStyle.FixedSingle
+                        .Image = Bitmap.FromFile(_reg.getItemImagePath(i.ToString("D2")))
+                        .SizeMode = PictureBoxSizeMode.AutoSize
+                        .Name = "PictureBox" & _pixN
+                        .ContextMenuStrip = cmsPictureBox
+                        .BackColor = Color.Transparent
+                        .Parent = pbMainBackground
+                    End With
+                    Me.Controls.Add(_pix)
+                    Me._pix.BringToFront()
+                    Me.lbPictureBox.Items.Add("PictureBox" & _pixN)
+                    Me._PixBoxFileName.Add("PictureBox" & _pixN, _reg.getItemImagePath(i.ToString("D2")))
+                    Me.lbItems.Items.Add("PictureBox" & _pixN)
+                    _pixN = _pixN + 1
+                End If
             Next
         End If
         _inputFields = Nothing
@@ -362,6 +392,7 @@ Public Class frmMain
 
     Public Sub saveItemsToRegistry()
         Dim _txt As TextBox = txt
+        Dim _pixbox As PictureBox = _pix
         Dim i As Integer = 0
         Dim _screenPos As Point
 
@@ -370,7 +401,7 @@ Public Class frmMain
 
         'txtBox3.Text = ScreenPos.ToString
         lblScreenPos.Text = _screenPos.ToString
-        _reg.setInputFields(Me.Controls.OfType(Of TextBox).Count)
+        _reg.setInputFields(Me.lbItems.Items.Count)
         _reg.setSourceWallpaper(Me.txtOpenBackgroundFileName.Text)
         _reg.setCoordinatesMode(cbCoordinatesMode.Text)
         _reg.setWallpaper(txtSaveWallpaper.Text)
@@ -381,17 +412,29 @@ Public Class frmMain
         Call _reg.setFontStyle(getFontStyle)
 
         For Each _item As String In lbItems.Items
-            _txt = CType(Me.Controls(_item), TextBox)
-            _screenPos = _txt.PointToScreen(New Point(0, 0))
-            _reg.setItemText(i.ToString("D2"), _txt.Text)
-            _reg.setItemFont(i.ToString("D2"), _txt.Font)
-            _reg.setItemColor(i.ToString("D2"), ColorTranslator.ToWin32(_txt.ForeColor))
-            _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
-            _reg.setItemWidth(i.ToString("D2"), _txt.Width)
-            _reg.setItemAlign(i.ToString("D2"), _txt.TextAlign)
-            _reg.setItemLocationInvert(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
-            _reg.setItemLocationPercent(i.ToString("D2"), (_screenPos.X / (screenWidth / 100)).ToString() + "," + (_screenPos.Y / (screenHeight / 100)).ToString())
-            i = i + 1
+            If _item.Contains("TextBox") Then
+                _txt = CType(Me.Controls(_item), TextBox)
+                _screenPos = _txt.PointToScreen(New Point(0, 0))
+                _reg.setItemObject(i.ToString("D2"), "TextBox")
+                _reg.setItemText(i.ToString("D2"), _txt.Text)
+                _reg.setItemFont(i.ToString("D2"), _txt.Font)
+                _reg.setItemColor(i.ToString("D2"), ColorTranslator.ToWin32(_txt.ForeColor))
+                _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
+                _reg.setItemWidth(i.ToString("D2"), _txt.Width)
+                _reg.setItemAlign(i.ToString("D2"), _txt.TextAlign)
+                _reg.setItemLocationInvert(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
+                _reg.setItemLocationPercent(i.ToString("D2"), (_screenPos.X / (screenWidth / 100)).ToString() + "," + (_screenPos.Y / (screenHeight / 100)).ToString())
+                i = i + 1
+            ElseIf _item.Contains("PictureBox") Then
+                _pixbox = CType(Me.Controls(_item), PictureBox)
+                _screenPos = _pixbox.PointToScreen(New Point(0, 0))
+                _reg.setItemObject(i.ToString("D2"), "PictureBox")
+                _reg.setItemImagePath(i.ToString("D2"), Me._PixBoxFileName.Item(_item))
+                _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
+                _reg.setItemLocationInvert(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
+                _reg.setItemLocationPercent(i.ToString("D2"), (_screenPos.X / (screenWidth / 100)).ToString() + "," + (_screenPos.Y / (screenHeight / 100)).ToString())
+                i = i + 1
+            End If
         Next
 
         _notSaved = False
@@ -402,13 +445,16 @@ Public Class frmMain
         If Not _inputFields = 0 Then
             For i As Integer = 0 To _inputFields - 1
                 Try
+                    _reg.delItemObject(i.ToString("D2"))
+                    _reg.delItemImagePath(i.ToString("D2"))
                     _reg.delItemText(i.ToString("D2"))
                     _reg.delItemFont(i.ToString("D2"))
-                    _reg.delItemColor(ToString("D2"))
-                    _reg.delItemLocation(i.ToString("D2"))
+                    _reg.delItemColor(i.ToString("D2"))
                     _reg.delItemWidth(i.ToString("D2"))
                     _reg.delItemAlign(i.ToString("D2"))
+                    _reg.delItemLocation(i.ToString("D2"))
                     _reg.delItemLocationInvert(i.ToString("D2"))
+                    _reg.delItemLocationPercent(i.ToString("D2"))
                 Catch ex As Exception
 
                 End Try
@@ -587,6 +633,16 @@ Public Class frmMain
     End Sub
 
     Private Sub txt_GotFocus(sender As Object, e As EventArgs)
+        Dim _controlMove As TextBox = DirectCast(sender, TextBox)
+        Dim _screenPos As Point = _controlMove.PointToScreen(New Point(0, 0))
+        'txtBox3.Text = _screenPos.ToString
+        'txtBox1.Text = _controlMove.Location.ToString
+        lblScreenPos.Text = _screenPos.ToString
+        _controlMove = Nothing
+        _screenPos = Nothing
+    End Sub
+
+    Private Sub txt_MouseHover(sender As Object, e As EventArgs)
         Dim _controlMove As TextBox = DirectCast(sender, TextBox)
         Dim _screenPos As Point = _controlMove.PointToScreen(New Point(0, 0))
         'txtBox3.Text = _screenPos.ToString
@@ -1030,7 +1086,15 @@ Public Class frmMain
         lblLiveScreenPos.Text = screenPos.ToString
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub cmsPictureBox_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles cmsPictureBox.Opening
+        Dim _cms As ContextMenuStrip = CType(sender, ContextMenuStrip)
+        Dim _pix As PictureBox = _cms.SourceControl
+        cmsPBtsNameThing.Text = _pix.Name
+    
+        _cms = Nothing
+    End Sub
+
+    Private Sub tscmdAddPicture_Click(sender As Object, e As EventArgs) Handles tscmdAddPicture.Click
         Dim _pixfile As String = ""
         With Me.ofdOpenBackground
             .Filter = "PNG Files|*.png|JPEG Files|*.jpg"
@@ -1042,22 +1106,5 @@ Public Class frmMain
             _pixfile = ofdOpenBackground.FileName
             Call addPicBoxToForm(_pixfile)
         End If
-    End Sub
-
-
-    Private Sub cmsPictureBox_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles cmsPictureBox.Opening
-        Dim _cms As ContextMenuStrip = CType(sender, ContextMenuStrip)
-        Dim _pix As PictureBox = _cms.SourceControl
-        cmsPBtsNameThing.Text = _pix.Name
-    
-        _cms = Nothing
-    End Sub
-
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub pbBackground_Click(sender As Object, e As EventArgs) Handles pbBackground.Click
-
     End Sub
 End Class
