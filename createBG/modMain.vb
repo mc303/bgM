@@ -56,6 +56,7 @@ Module modMain
         Dim _inputFields As Integer = _reg.getInputFields()
         Dim _wallpaper As String = _reg.getSourceWallpaper
         Dim _bg As String = _reg.getWallpaper
+        Dim _itemObject As String
 
         'Load the Image to be written on.
         Dim bitMapImage As Bitmap = Bitmap.FromFile(_wallpaper)
@@ -71,31 +72,44 @@ Module modMain
 
         If Not _inputFields = 0 Then
             For i As Integer = 0 To _inputFields - 1
-                _txt = _reg.getItemText(i.ToString("D2"))
-                '_screenPos = _txt.PointToScreen(New Point(-21, -10))
-                _screenPos = _Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
-                _screenPos = New Point((_screenPos.X + _offsetX), (_screenPos.Y + _offsetY))
-                'ScreenPos = _txt.Location
-                _color = New SolidBrush(ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2"))))
-                'Write your text.
-                Select Case _reg.getItemAlign(i.ToString("D2"))
-                    Case 0 'Left
-                        stringFormat.Alignment = StringAlignment.Near
-                        ' stringFormat.LineAlignment = StringAlignment.Near
-                    Case 1 'Right
-                        stringFormat.Alignment = StringAlignment.Far
-                        ' stringFormat.LineAlignment = StringAlignment.Far
-                        _screenPos = New Point(_screenPos.X + _reg.getItemWidth(i.ToString("D2")), _screenPos.Y)
-                    Case 2 'Center
-                        stringFormat.Alignment = StringAlignment.Center
-                        'stringFormat.LineAlignment = StringAlignment.Center
-                        _screenPos = New Point(_screenPos.X + (_reg.getItemWidth(i.ToString("D2")) / 2), _screenPos.Y)
-                End Select
+                _itemObject = _reg.getItemObject(i.ToString("D2"))
+               
 
-                _envText = ConvertItems.itemToEnviromentVar(_txt)
-                Console.WriteLine(String.Format("  adding text to background: {0}", _envText))
-                'TextRenderer.DrawText()
-                graphicImage.DrawString(_envText, _reg.getItemFont(i.ToString("D2")), _color, _screenPos, stringFormat)
+                If _itemObject.Contains("TextBox") Then
+                    _txt = _reg.getItemText(i.ToString("D2"))
+                    '_screenPos = _txt.PointToScreen(New Point(-21, -10))
+                    _screenPos = _Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
+                    _screenPos = New Point((_screenPos.X + _offsetX), (_screenPos.Y + _offsetY))
+                    '_screenPos = _txt.PointToScreen(New Point(2, 2))
+                    'ScreenPos = _txt.Location
+                    _color = New SolidBrush(ColorTranslator.FromWin32(_reg.getItemColor(i.ToString("D2"))))
+                    'Write your text.
+                    Select Case _reg.getItemAlign(i.ToString("D2"))
+                        Case 0 'Left
+                            stringFormat.Alignment = StringAlignment.Near
+                            ' stringFormat.LineAlignment = StringAlignment.Near
+                        Case 1 'Right
+                            stringFormat.Alignment = StringAlignment.Far
+                            ' stringFormat.LineAlignment = StringAlignment.Far
+                            _screenPos = New Point(_screenPos.X + _reg.getItemWidth(i.ToString("D2")), _screenPos.Y)
+                        Case 2 'Center
+                            stringFormat.Alignment = StringAlignment.Center
+                            'stringFormat.LineAlignment = StringAlignment.Center
+                            _screenPos = New Point(_screenPos.X + (_reg.getItemWidth(i.ToString("D2")) / 2), _screenPos.Y)
+                    End Select
+
+                    _envText = ConvertItems.itemToEnviromentVar(_txt)
+                    Console.WriteLine(String.Format("  adding text to background: {0}", _envText))
+
+                    graphicImage.DrawString(_envText, _reg.getItemFont(i.ToString("D2")), _color, _screenPos, stringFormat)
+                ElseIf _itemObject.Contains("PictureBox") Then
+                    '_screenPos = _txt.PointToScreen(New Point(-21, -10))
+                    _screenPos = _Convert.ToPointFromString(_reg.getItemLocation(i.ToString("D2")))
+                    _screenPos = New Point((_screenPos.X), (_screenPos.Y))
+                    '_screenPos = _txt.PointToScreen(New Point(2, 2))
+                    'ScreenPos = _txt.Location
+                    graphicImage.DrawImage(Bitmap.FromFile(_reg.getItemImagePath(i.ToString("D2"))), _screenPos)
+                End If
             Next
 
             'Save the new image to the response output stream.

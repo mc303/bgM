@@ -170,7 +170,7 @@ Module mainMod
                 graphicImage.DrawString(_envText, _txt.Font, _color, _screenPos, stringFormat)
             ElseIf _item.Contains("PictureBox") Then
                 _pix = CType(frmMain.Controls(_item), PictureBox)
-                _screenPos = _pix.PointToScreen(New Point(2, 2))
+                _screenPos = _pix.PointToScreen(New Point(0, 0))
                 graphicImage.DrawImage(_pix.Image, _screenPos)
             End If
         Next
