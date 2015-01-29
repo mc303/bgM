@@ -1,7 +1,7 @@
 bgM
 ===
 
-With bgM you can create a background at logon.
+Whats is bgM? With bgM you can create custom backgrounds. It will use system informatie to add this to a image you select and saves the backround image to disk. It well change youre background to the saved image.
 
 There are 2 application.
 
