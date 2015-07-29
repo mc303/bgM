@@ -59,8 +59,8 @@ Module mainMod
                 Dim _y As Integer = (screenHeight / 100) * _percoor(1)
                 Return frmMain.PointToScreen(New Point(_x, _y))
 
-            Case "Invert"
-                Dim _percoor As String() = _reg.getItemLocationPercent(i.ToString("D2")).Split(",")
+            Case "Align Right"
+                Dim _percoor As String() = _reg.getItemLocationAlignRight(i.ToString("D2")).Split(",")
                 Dim _x As Integer = screenWidth - _percoor(0)
                 Dim _y As Integer = screenHeight - _percoor(1)
                 Return frmMain.PointToScreen(New Point(_x, _y))

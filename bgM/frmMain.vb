@@ -227,15 +227,20 @@ Public Class frmMain
 
         With Me.lblScreenPos
             .Top = screenHeight - 38
-            .Left = screenWidth - 140
+            .Left = 12
             .Visible = True
+            .Text = "{X=0, Y=0}"
+            .Font = New Font("Courier New", Convert.ToSingle("14,25"))
+            .TextAlign = ContentAlignment.MiddleCenter
         End With
 
         With Me.lblLiveScreenPos
             .Visible = False
-            .Top = 24
-            .Left = 25
+            .Top = screenHeight - 38
+            .Left = 12
             .Text = "{X=0, Y=0}"
+            .Font = New Font("Courier New", Convert.ToSingle("14,25"))
+            .TextAlign = ContentAlignment.MiddleCenter
         End With
 
         With Me.lblVersion
@@ -400,7 +405,7 @@ Public Class frmMain
         Call Me.removeRegText()
 
         'txtBox3.Text = ScreenPos.ToString
-        lblScreenPos.Text = _screenPos.ToString
+        ' lblScreenPos.Text = _screenPos.ToString
         _reg.setInputFields(Me.lbItems.Items.Count)
         _reg.setSourceWallpaper(Me.txtOpenBackgroundFileName.Text)
         _reg.setCoordinatesMode(cbCoordinatesMode.Text)
@@ -422,7 +427,7 @@ Public Class frmMain
                 _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
                 _reg.setItemWidth(i.ToString("D2"), _txt.Width)
                 _reg.setItemAlign(i.ToString("D2"), _txt.TextAlign)
-                _reg.setItemLocationInvert(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
+                _reg.setItemLocationAlignRight(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
                 _reg.setItemLocationPercent(i.ToString("D2"), (_screenPos.X / (screenWidth / 100)).ToString() + "," + (_screenPos.Y / (screenHeight / 100)).ToString())
                 i = i + 1
             ElseIf _item.Contains("PictureBox") Then
@@ -431,7 +436,7 @@ Public Class frmMain
                 _reg.setItemObject(i.ToString("D2"), "PictureBox")
                 _reg.setItemImagePath(i.ToString("D2"), Me._PixBoxFileName.Item(_item))
                 _reg.setItemLocation(i.ToString("D2"), _screenPos.ToString)
-                _reg.setItemLocationInvert(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
+                _reg.setItemLocationAlignRight(i.ToString("D2"), (screenWidth - _screenPos.X).ToString + "," + (screenHeight - _screenPos.Y).ToString)
                 _reg.setItemLocationPercent(i.ToString("D2"), (_screenPos.X / (screenWidth / 100)).ToString() + "," + (_screenPos.Y / (screenHeight / 100)).ToString())
                 i = i + 1
             End If
@@ -453,7 +458,7 @@ Public Class frmMain
                     _reg.delItemWidth(i.ToString("D2"))
                     _reg.delItemAlign(i.ToString("D2"))
                     _reg.delItemLocation(i.ToString("D2"))
-                    _reg.delItemLocationInvert(i.ToString("D2"))
+                    _reg.delItemLocationAlignRight(i.ToString("D2"))
                     _reg.delItemLocationPercent(i.ToString("D2"))
                 Catch ex As Exception
 
@@ -1107,4 +1112,23 @@ Public Class frmMain
             Call addPicBoxToForm(_pixfile)
         End If
     End Sub
+
+    Private Sub cmsPBtsRemove_Click(sender As Object, e As EventArgs) Handles cmsPBtsRemove.Click
+        Dim _clickedMenu As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+        Dim _cms As ContextMenuStrip = CType(_clickedMenu.Owner, ContextMenuStrip)
+
+        ' MessageBox.Show(_cms.SourceControl.Name)
+        Me.Controls.Remove(_cms.SourceControl)
+        For Each _item As String In lbItems.Items
+            If _item = _cms.SourceControl.Name Then
+                lbItems.Items.Remove(_item)
+                _notSaved = True
+                Exit For
+            End If
+        Next
+        _cms = Nothing
+        _clickedMenu = Nothing
+    End Sub
+
+  
 End Class

@@ -206,25 +206,25 @@ Public Class _reg
         _regKey = Nothing
     End Sub
 
-    Public Shared Function getItemLocationInvert(_n As String) As String
+    Public Shared Function getItemLocationAlignRight(_n As String) As String
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey(_regLocationRegistry, True)
-        Return _regKey.GetValue("item" & _n & "LocationInvert")
+        Return _regKey.GetValue("item" & _n & "LocationAlignRight")
 
         _regKey = Nothing
     End Function
 
-    Public Shared Sub setItemLocationInvert(_n As String, _txtLocation As String)
+    Public Shared Sub setItemLocationAlignRight(_n As String, _txtLocation As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey(_regLocationRegistry, True)
-        _regKey.SetValue("item" & _n & "LocationInvert", _txtLocation, RegistryValueKind.String)
+        _regKey.SetValue("item" & _n & "LocationAlignRight", _txtLocation, RegistryValueKind.String)
         _regKey = Nothing
     End Sub
 
-    Public Shared Sub delItemLocationInvert(_n As String)
+    Public Shared Sub delItemLocationAlignRight(_n As String)
         Dim _regKey As RegistryKey
         _regKey = Registry.CurrentUser.OpenSubKey(_regLocationRegistry, True)
-        _regKey.DeleteValue("item" & _n & "LocationInvert", False)
+        _regKey.DeleteValue("item" & _n & "LocationAlignRight", False)
         _regKey = Nothing
     End Sub
 

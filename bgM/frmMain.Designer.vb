@@ -69,6 +69,8 @@ Partial Class frmMain
         Me.tscbListItems = New System.Windows.Forms.ToolStripComboBox()
         Me.tscmdHide = New System.Windows.Forms.ToolStripButton()
         Me.tscmdClose = New System.Windows.Forms.ToolStripButton()
+        Me.tscmdAddPicture = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.tscmdPreviewBG = New System.Windows.Forms.ToolStripButton()
         Me.tscmdSaveItems = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
@@ -96,10 +98,6 @@ Partial Class frmMain
         Me.cmsPBtsNameThing = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmsPBtsRemove = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
-        Me.cmsPBtsRotate90 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.tscmdAddPicture = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmsItems.SuspendLayout()
         Me.plResize.SuspendLayout()
         CType(Me.nudResize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -472,6 +470,20 @@ Partial Class frmMain
         Me.tscmdClose.Size = New System.Drawing.Size(29, 22)
         Me.tscmdClose.Text = "Exit"
         '
+        'tscmdAddPicture
+        '
+        Me.tscmdAddPicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tscmdAddPicture.Image = CType(resources.GetObject("tscmdAddPicture.Image"), System.Drawing.Image)
+        Me.tscmdAddPicture.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tscmdAddPicture.Name = "tscmdAddPicture"
+        Me.tscmdAddPicture.Size = New System.Drawing.Size(73, 22)
+        Me.tscmdAddPicture.Text = "Add Picture"
+        '
+        'ToolStripSeparator9
+        '
+        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
+        '
         'tscmdPreviewBG
         '
         Me.tscmdPreviewBG.AutoToolTip = False
@@ -566,7 +578,7 @@ Partial Class frmMain
         Me.plSettings.Controls.Add(Me.txtSaveWallpaper)
         Me.plSettings.Location = New System.Drawing.Point(460, 46)
         Me.plSettings.Name = "plSettings"
-        Me.plSettings.Size = New System.Drawing.Size(544, 122)
+        Me.plSettings.Size = New System.Drawing.Size(544, 123)
         Me.plSettings.TabIndex = 17
         Me.plSettings.Visible = False
         '
@@ -603,7 +615,7 @@ Partial Class frmMain
         '
         Me.cbCoordinatesMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbCoordinatesMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cbCoordinatesMode.Items.AddRange(New Object() {"Location", "Percent", "Invert"})
+        Me.cbCoordinatesMode.Items.AddRange(New Object() {"Location", "Percent", "Align Right"})
         Me.cbCoordinatesMode.Location = New System.Drawing.Point(130, 91)
         Me.cbCoordinatesMode.Name = "cbCoordinatesMode"
         Me.cbCoordinatesMode.Size = New System.Drawing.Size(106, 21)
@@ -641,12 +653,13 @@ Partial Class frmMain
         'lblScreenPos
         '
         Me.lblScreenPos.AutoSize = True
-        Me.lblScreenPos.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblScreenPos.Font = New System.Drawing.Font("Courier New", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblScreenPos.Location = New System.Drawing.Point(455, 207)
         Me.lblScreenPos.Name = "lblScreenPos"
-        Me.lblScreenPos.Size = New System.Drawing.Size(144, 18)
+        Me.lblScreenPos.Size = New System.Drawing.Size(208, 21)
         Me.lblScreenPos.TabIndex = 18
         Me.lblScreenPos.Text = "{ X=9999, Y=9999 }"
+        Me.lblScreenPos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.lblScreenPos.Visible = False
         '
         'lblVersion
@@ -680,58 +693,34 @@ Partial Class frmMain
         Me.lblLiveScreenPos.Size = New System.Drawing.Size(56, 18)
         Me.lblLiveScreenPos.TabIndex = 23
         Me.lblLiveScreenPos.Text = "Label5"
+        Me.lblLiveScreenPos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'cmsPictureBox
         '
         Me.cmsPictureBox.DropShadowEnabled = False
         Me.cmsPictureBox.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmsPictureBox.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmsPBtsNameThing, Me.ToolStripSeparator7, Me.cmsPBtsRemove, Me.ToolStripSeparator8, Me.cmsPBtsRotate90})
+        Me.cmsPictureBox.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmsPBtsNameThing, Me.ToolStripSeparator7, Me.cmsPBtsRemove})
         Me.cmsPictureBox.Name = "ContextMenuStrip1"
         Me.cmsPictureBox.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-        Me.cmsPictureBox.Size = New System.Drawing.Size(138, 82)
+        Me.cmsPictureBox.Size = New System.Drawing.Size(153, 76)
         '
         'cmsPBtsNameThing
         '
         Me.cmsPBtsNameThing.Enabled = False
         Me.cmsPBtsNameThing.Name = "cmsPBtsNameThing"
-        Me.cmsPBtsNameThing.Size = New System.Drawing.Size(137, 22)
+        Me.cmsPBtsNameThing.Size = New System.Drawing.Size(152, 22)
         Me.cmsPBtsNameThing.Text = "name-thing"
         '
         'ToolStripSeparator7
         '
         Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
-        Me.ToolStripSeparator7.Size = New System.Drawing.Size(134, 6)
+        Me.ToolStripSeparator7.Size = New System.Drawing.Size(149, 6)
         '
         'cmsPBtsRemove
         '
         Me.cmsPBtsRemove.Name = "cmsPBtsRemove"
-        Me.cmsPBtsRemove.Size = New System.Drawing.Size(137, 22)
+        Me.cmsPBtsRemove.Size = New System.Drawing.Size(152, 22)
         Me.cmsPBtsRemove.Text = "Remove"
-        '
-        'ToolStripSeparator8
-        '
-        Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
-        Me.ToolStripSeparator8.Size = New System.Drawing.Size(134, 6)
-        '
-        'cmsPBtsRotate90
-        '
-        Me.cmsPBtsRotate90.Name = "cmsPBtsRotate90"
-        Me.cmsPBtsRotate90.Size = New System.Drawing.Size(137, 22)
-        Me.cmsPBtsRotate90.Text = "Rotate 90"
-        '
-        'tscmdAddPicture
-        '
-        Me.tscmdAddPicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.tscmdAddPicture.Image = CType(resources.GetObject("tscmdAddPicture.Image"), System.Drawing.Image)
-        Me.tscmdAddPicture.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tscmdAddPicture.Name = "tscmdAddPicture"
-        Me.tscmdAddPicture.Size = New System.Drawing.Size(73, 22)
-        Me.tscmdAddPicture.Text = "Add Picture"
-        '
-        'ToolStripSeparator9
-        '
-        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-        Me.ToolStripSeparator9.Size = New System.Drawing.Size(6, 25)
         '
         'frmMain
         '
@@ -844,8 +833,6 @@ Partial Class frmMain
     Friend WithEvents cmsPBtsNameThing As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents cmsPBtsRemove As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents cmsPBtsRotate90 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tscmdAddPicture As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
 
